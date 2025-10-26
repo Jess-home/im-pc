@@ -1,0 +1,359 @@
+{
+  "App.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/applyList/index.vue": {
+    "processedLines": {
+      "20": []
+    },
+    "completed": true
+  },
+  "components/chatlist/chatlist.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/divinput/divinput.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/editUserTag/index.vue": {
+    "processedLines": {
+      "12": [
+        "placeholder=搜索"
+      ]
+    },
+    "completed": true
+  },
+  "components/friendlist/friendlist.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/group/index.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/info/info.vue": {
+    "processedLines": {
+      "37": [
+        "title=点击修改备注"
+      ],
+      "74": [
+        "title=分享名片",
+        "tip=分别转发给"
+      ]
+    },
+    "completed": true
+  },
+  "components/LanguageSwitcher.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/loading/index.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/manage/index.vue": {
+    "processedLines": {
+      "3": [
+        "title=群管理"
+      ],
+      "10": [
+        "title=群昵称"
+      ],
+      "14": [
+        "placeholder=请输入群昵称"
+      ],
+      "22": [
+        "title=我在本群的昵称"
+      ],
+      "28": [
+        "placeholder=请输入你在本群的昵称"
+      ],
+      "37": [
+        "title=群公告"
+      ],
+      "45": [
+        "placeholder=请输入群公告"
+      ],
+      "54": [
+        "title=群管理"
+      ]
+    },
+    "completed": true
+  },
+  "components/message/message.vue": {
+    "processedLines": {
+      "52": [
+        "title=点击修改备注"
+      ],
+      "63": [
+        "title=分享名片"
+      ],
+      "65": [
+        "title=对话"
+      ],
+      "66": [
+        "title=删除"
+      ],
+      "67": [
+        "title=拉黑"
+      ],
+      "122": [
+        "title=点击修改备注"
+      ],
+      "138": [
+        "title=分享名片"
+      ],
+      "226": [
+        "title=对话"
+      ],
+      "230": [
+        "title=添加"
+      ]
+    },
+    "completed": true
+  },
+  "components/message/message1.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/mycard/mycard.vue": {
+    "processedLines": {
+      "133": [
+        "title=密码修改"
+      ],
+      "135": [
+        "label=输入原密码"
+      ],
+      "138": [
+        "label=输入新密码"
+      ],
+      "141": [
+        "label=确认新密码"
+      ],
+      "162": [
+        "placeholder=请输入昵称"
+      ],
+      "167": [
+        "placeholder=请输入内容"
+      ],
+      "172": [
+        "placeholder=请选择"
+      ]
+    },
+    "completed": true
+  },
+  "components/search/search.vue": {
+    "processedLines": {
+      "13": [
+        "placeholder=搜索"
+      ],
+      "29": [
+        "title=发起群聊"
+      ],
+      "54": [
+        "title=添加好友"
+      ],
+      "61": [
+        "placeholder=请输入内容"
+      ],
+      "66": [
+        "description=暂无搜索结果"
+      ],
+      "104": [
+        "title=发起群聊"
+      ],
+      "110": [
+        "title=群发消息"
+      ],
+      "115": [
+        "title=添加标签"
+      ]
+    },
+    "completed": true
+  },
+  "components/selectFriend/index.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/selectGroupUser/index.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/selectUser/index.vue": {
+    "processedLines": {
+      "7": [
+        "placeholder=搜索"
+      ]
+    },
+    "completed": true
+  },
+  "components/selectUserGroup/index.vue": {
+    "processedLines": {
+      "7": [
+        "placeholder=搜索"
+      ]
+    },
+    "completed": true
+  },
+  "components/selectUserTag/index.vue": {
+    "processedLines": {
+      "7": [
+        "placeholder=如家人、朋友等"
+      ],
+      "13": [
+        "placeholder=搜索"
+      ]
+    },
+    "completed": true
+  },
+  "components/tagslist/tag.vue": {
+    "processedLines": {
+      "30": [
+        "title=标签名称"
+      ]
+    },
+    "completed": true
+  },
+  "components/tagslist/tagslist.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/text/text.vue": {
+    "processedLines": {
+      "5": [
+        "title=选择表情"
+      ],
+      "13": [
+        "title=发送图片"
+      ],
+      "17": [
+        "title=发送文件"
+      ],
+      "20": [
+        "title=发送视频"
+      ],
+      "29": [
+        "title=推荐好友"
+      ],
+      "32": [
+        "title=分享群聊"
+      ],
+      "38": [],
+      "51": [
+        "placeholder=请输入名称"
+      ],
+      "55": [],
+      "83": [
+        "placeholder=请输入名称"
+      ],
+      "109": [
+        "placeholder=请输入名称"
+      ]
+    },
+    "completed": true
+  },
+  "components/userlistmodal/userlistmodal.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "components/vtext/text.vue": {
+    "processedLines": {
+      "11": [
+        "title=选择表情"
+      ],
+      "23": [
+        "title=发送图片"
+      ],
+      "36": [
+        "title=发送文件"
+      ],
+      "47": [
+        "title=发送视频"
+      ],
+      "64": [
+        "title=推荐好友"
+      ],
+      "67": [
+        "title=分享群聊"
+      ],
+      "83": [],
+      "100": [
+        "placeholder=请输入名称"
+      ],
+      "107": [],
+      "136": [
+        "placeholder=请输入名称"
+      ],
+      "166": [
+        "placeholder=请输入名称"
+      ]
+    },
+    "completed": true
+  },
+  "view/chat.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "view/friend.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "view/login-old.vue": {
+    "processedLines": {},
+    "completed": true
+  },
+  "view/login.vue": {
+    "processedLines": {
+      "42": [
+        "placeholder=请输入用户名/手机号码"
+      ],
+      "51": [
+        "placeholder=请输入密码"
+      ],
+      "80": [
+        "placeholder=请输入用户名/手机号码"
+      ],
+      "89": [
+        "placeholder=请设置密码,不小于5位"
+      ],
+      "126": [
+        "placeholder=请设置用户昵称,不小于5位"
+      ]
+    },
+    "completed": true
+  },
+  "view/my.vue": {
+    "processedLines": {
+      "11": [
+        "title=点击删除收藏"
+      ],
+      "16": [
+        "title=点击转发收藏"
+      ],
+      "36": [
+        "title=消息转发"
+      ],
+      "37": [
+        "tip=分别转发给"
+      ]
+    },
+    "completed": true
+  },
+  "view/reg.vue": {
+    "processedLines": {
+      "10": [
+        "placeholder=请输入用户名，不小于5位"
+      ],
+      "16": [
+        "placeholder=请输入密码，不小于5位"
+      ]
+    },
+    "completed": true
+  },
+  "view/tags.vue": {
+    "processedLines": {},
+    "completed": true
+  }
+}

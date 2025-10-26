@@ -3,14 +3,14 @@
     <div class="select-content">
       <div class="select-content-left">
         <div class="tag-box">
-          <div>修改标签：</div>
+          <div>{{$t('xiu_gai_biao_qian')}}</div>
           <div class="tag-input">
           </div>
         </div>
         <div class="select-content-header">
           <el-input
             v-model="search"
-            placeholder="搜索"
+            :placeholder="$t('sou_suo')"
             size="mini"
             prefix-icon="el-icon-search"
           ></el-input>
@@ -65,8 +65,8 @@
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-      <el-button size="small" type="primary" @click="handleSend">确 定</el-button>
+      <el-button size="small" @click="dialogVisible = false">{{$t('qu_xiao')}}</el-button>
+      <el-button size="small" type="primary" @click="handleSend">{{$t('que_ding')}}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -115,7 +115,7 @@ export default {
     ]),
     handleCheck (data) {
       if (this.default.includes(data.user_id)) {
-        this.$message.warning('该用户已被邀请');
+        this.$message.warning(this.$t('gai_yong_hu_yi_bei_yao_qing'));
         return;
       }
       if (
@@ -124,7 +124,7 @@ export default {
           (item) => !(item.user_id != data.user_id && item.isSelect)
         )
       ) {
-        this.$message.warning('仅能分享单个用户');
+        this.$message.warning(this.$t('jin_neng_fen_xiang_dan_ge_yong_hu'));
         return;
       }
       this.list.forEach((item, index) => {
@@ -160,7 +160,7 @@ export default {
     },
     handleSend () {
       if (this.selectedList.length == 0) {
-        this.$message.warning('请选择人员');
+        this.$message.warning(this.$t('qing_xuan_ze_ren_yuan'));
         return;
       }
       let user_ids = [];

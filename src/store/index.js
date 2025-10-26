@@ -242,6 +242,7 @@ const mutations = {
           type: (item.msg.content && item.msg.content.type) || item.type,
           msg_type: res.data.type,
           read: '',
+          liked: item.msg.liked,
           list_id: res.data.list_id,
           msg_id: item.msg.id,
           userId: item.msg.user_info.uid,

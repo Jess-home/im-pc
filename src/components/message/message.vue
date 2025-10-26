@@ -5,9 +5,8 @@
         <div class="text-overflow">{{ selectedChat.user.name }}</div>
 
         <span v-if="selectedChat.type == 1">({{ selectedChat.groupImgs.length }})</span>
-        <span v-if="selectedChat.type == 0" class="online">({{ user.online === 0 ? "离线" : "在线" }}) {{ user.ip }} {{
-          user.ip_cityname }}
-          {{ user.region }}</span>
+        <span v-if="selectedChat.type == 0" class="online">({{ user.online === 0 ? "离线" : "在线" }})
+          </span>
       </div>
       <!-- <div
         class="header-option"
@@ -50,23 +49,23 @@
           </div>
           <div v-if="info" class="detInfo">
             <div class="remark">
-              <span>备&nbsp&nbsp&nbsp注</span>
-              <span title="点击修改备注" style="cursor: pointer" @click="changeRemark(info, selectedChat.user.name)">{{
+              <span>{{$t('bei')}}&nbsp&nbsp&nbsp{{$t('zhu')}}</span>
+              <span :title="$t('dian_ji_xiu_gai_bei_zhu')" style="cursor: pointer" @click="changeRemark(info, selectedChat.user.name)">{{
                 selectedChat.user.name }}
               </span>
             </div>
             <div class="area">
-              <span>来&nbsp&nbsp&nbsp源</span><span>{{ info.from }}</span>
+              <span>{{$t('lai')}}&nbsp&nbsp&nbsp{{$t('yuan')}}</span><span>{{ info.from }}</span>
             </div>
             <div class="list_id">
-              <span>微信号</span><span>{{ info.username }}</span>
+              <span>{{$t('wei_xin_hao')}}</span><span>{{ info.username }}</span>
             </div>
           </div>
-          <div v-if="info" title="分享名片" class="tip el-icon-position" @click="handleShare(item)"></div>
+          <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(item)"></div>
           <!-- TODO对话 -->
-          <div v-if="info" title="对话" class="tip iconfont iconIMweb_news" @click="show_userinfo = false"></div>
-          <div v-if="info" title="删除" class="tip iconfont iconIMweb_deldte" @click="showDel"></div>
-		   <div v-if="info" title="拉黑" >拉黑
+          <div v-if="info" :title="$t('dui_hua')" class="tip iconfont iconIMweb_news" @click="show_userinfo = false"></div>
+          <div v-if="info" :title="$t('shan_chu')" class="tip iconfont iconIMweb_deldte" @click="showDel"></div>
+		   <div v-if="info" :title="$t('la_hei')" >{{$t('la_hei')}}
 			   <el-switch
 					@change="showlahei(info.user_id)"
 			     v-model="lahei"
@@ -97,7 +96,7 @@
                   item.date - selectedChat.messages[index - 1].date >
                   180 * 1000)
                 " class="time">
-                <span>{{ item.date | time }}</span>
+                <span>{{ formatTime(item.date)}}</span>
               </div>
               <div class="main" :class="{ self: item.self }">
                 <el-popover v-if="!item.self" placement="top-start" width="300" trigger="click" @show="showInfo(item)">
@@ -120,24 +119,24 @@
                     </div>
                     <div v-if="info" class="detInfo">
                       <div class="remark">
-                        <span>备&nbsp&nbsp&nbsp注</span>
-                        <span title="点击修改备注" style="cursor: pointer"
+                        <span>{{$t('bei')}}&nbsp&nbsp&nbsp{{$t('zhu')}}</span>
+                        <span :title="$t('dian_ji_xiu_gai_bei_zhu')" style="cursor: pointer"
                           @click="changeRemark(info, selectedChat.user.name)">{{ selectedChat.user.name }}
                         </span>
                       </div>
                       <div class="area">
-                        <span>来&nbsp&nbsp&nbsp源</span><span>{{ info.from }}</span>
+                        <span>{{$t('lai')}}&nbsp&nbsp&nbsp{{$t('yuan')}}</span><span>{{ info.from }}</span>
                       </div>
                       <div class="list_id">
-                        <span>微信号</span><span>{{ info.username }}</span>
+                        <span>{{$t('wei_xin_hao')}}</span><span>{{ info.username }}</span>
                       </div>
 
                     </div>
                     <div class="" v-if="(selectedChat ? selectedChat.type : '') == 1">
-                      <el-button size="mini" @click="handleNoSend(info.user_id)">禁言</el-button>
-                      <el-button size="mini" @click="handleRemove2(info.user_id)">移出群聊</el-button>
+                      <el-button size="mini" @click="handleNoSend(info.user_id)">{{$t('jin_yan')}}</el-button>
+                      <el-button size="mini" @click="handleRemove2(info.user_id)">{{$t('yi_chu_qun_liao')}}</el-button>
                     </div>
-                    <div v-if="info" title="分享名片" class="tip el-icon-position" @click="handleShare(item)"></div>
+                    <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(item)"></div>
                   </div>
                   <img slot="reference" class="avatar" width="36" height="36" :src="item.self
                     ? user.img
@@ -157,7 +156,7 @@
                 <div :class="item.self ? 'content-main-right' : 'content-main-left'">
                   <div :class="item.self ? 'content-main-user-right' : ''">
                     <div v-if="item.self" class="user-name-right">
-                      <span class="user-name-time">{{ item.date | time }}</span>
+                      <span class="user-name-time">{{ formatTime(item.date) }}</span>
                       <!-- TODO群聊群主标签 -->
                       <!-- <span class="user-name-tag">群主</span> -->
                       <span class="user-name-text">{{ item.user_info.name }}</span>
@@ -166,7 +165,7 @@
                       <span class="user-name-text">{{ item.user_info.name }}</span>
                       <!-- TODO群聊群主标签 -->
                       <!-- <span class="user-name-tag">群主</span> -->
-                      <span class="user-name-time">{{ item.date | time }}</span>
+                      <span class="user-name-time">{{ formatTime(item.date)}}</span>
                     </div>
                     <!-- 个人名片 -->
 
@@ -225,11 +224,11 @@
                           </div>
                           <!-- TODO对话 -->
                           <!-- <div
-                            title="对话"
+                            :title="$t('dui_hua')"
                             class="tip iconfont iconIMweb_news"
                           ></div> -->
                           <!-- TODO添加 -->
-                          <div title="添加" class="tip iconfont iconIMweb_addfriends"></div>
+                          <div :title="$t('tian_jia')" class="tip iconfont iconIMweb_addfriends"></div>
                         </div>
                         <div slot="reference" v-if="item.msgItem_type == 8" class="send-card">
                           <div class="send-card-content">
@@ -240,7 +239,7 @@
                           </div>
                           <div class="send-card-content-text">
                             <i style="font-size:16px" class="el-icon-user-solid"></i>
-                            <span>个人名片</span>
+                            <span>{{$t('ge_ren_ming_pian')}}</span>
                           </div>
                         </div>
                       </el-popover>
@@ -254,7 +253,7 @@
                         </div>
                         <div class="send-card-content-text">
                           <i style="font-size:16px" class="el-icon-user-solid"></i>
-                          <span>群名片</span>
+                          <span>{{$t('qun_ming_pian')}}</span>
                         </div>
                       </div>
                       <!-- 视频类型消息 -->
@@ -303,12 +302,17 @@
                           <img v-else src="@/assets/images/msglist/notRecogn.png" alt="" />
                         </div>
                       </div>
-                      <div v-if="item.self && showTip && item.read !==''" class="read-state">
-                        <span style="color:#07c427;font-weight: bold;" v-if="item.read">已读</span>
-                        <span style="color:#fc0005;font-weight: bold;" v-else>未读</span>
+                      <div v-if="item.self && showTip && item.read !==''" class="read-state" @click="yiduliebiao()">
+                        <span style="color:#07c427;font-weight: bold;" v-if="item.read"><img style="width: 25px;" src="@/assets/images/read.png" alt="" /></span>
+                        <span style="color:#fc0005;font-weight: bold;" v-else><img style="width: 25px;" src="@/assets/images/unread.png" alt="" /></span>
                       </div>
+                      
+                    </div>
+                    <div v-if="item.liked > 0" class="heart-icon">❤️
+                      <div class="like-count">{{ item.liked }}</div>
                     </div>
                   </div>
+                  
                 </div>
               </div>
             </template>
@@ -323,8 +327,9 @@
     </div>
     <div v-show="menuVisible" id="contextmenu-msg" class="contextmenu-msg_menu">
       <div class="contextmenu-msg__item" @click="handleSetting(4)">复制</div>
+      <div class="contextmenu-msg__item" @click="handleSetting(6)">点赞</div>
       <div v-if="currentRow.self || is_action > 0" class="contextmenu-msg__item" @click="handleSetting(1)">
-        撤回
+        删除
       </div>
       <div class="contextmenu-msg__item" @click="handleSetting(2)">收藏</div>
       <div class="contextmenu-msg__item" @click="handleSetting(3)">转发</div>
@@ -470,7 +475,7 @@
                           <div class="left">
                             <div class="people">
                               <div class="nickname">
-                                <span>{{ item.show_name }}</span>
+                                <span>{{ maskText(item.show_name) }}</span>
                                 <i @click="changeRemark(item, item.show_name, index)" v-if="item.is_friend"
                                   class="iconfont iconttubiao_bianji"
                                   style="font-size: 20px; color: rgb(66, 141, 252); cursor: pointer;"></i>
@@ -489,7 +494,7 @@
                           </div>
                           <div v-if="item.show_name" class="remark">
                             <span>昵称</span>
-                            <span>{{ item.show_name }}</span>
+                            <span>{{ maskText(item.show_name) }}</span>
                           </div>
                         </div>
                         <div title="对话" v-if="item.is_friend" class="tip iconfont iconIMweb_news"
@@ -569,6 +574,10 @@
         <el-button type="primary" @click="saveGroupName">保存</el-button>
       </span>
     </el-dialog>
+    <UserListModal 
+      :visible.sync="showModal" 
+      :list="userList"
+    />
   </div>
 </template>
 
@@ -597,94 +606,30 @@ import {
   editChange,
   getListId,
   friendAdd,
-  fetchlahei
+  fetchlahei,
+  dianzan,
+  groupState
 } from '@/api';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import selectUser from '@/components/selectUser';
 import selectGroupUser from '@/components/selectGroupUser';
 import Manage from '@/components/manage';
+import UserListModal from '@/components/userlistmodal/userlistmodal.vue';
 const { photoUrl, chatUrl, baseUrl } = window.__gconf;
 export default {
   components: {
     selectUser,
     Manage,
-    selectGroupUser
+    selectGroupUser,
+    UserListModal
   },
-  filters: {
-    // 将日期过滤为 hour:minutes
-    time(timestamp) {
-      timestamp = new Date(timestamp).valueOf() / 1000;
-      let curTimestamp = parseInt(new Date().getTime() / 1000), //当前时间戳
-        timestampDiff = curTimestamp - timestamp, // 参数时间戳与当前时间戳相差秒数
-        curDate = new Date(curTimestamp * 1000), // 当前时间日期对象
-        tmDate = new Date(timestamp * 1000), // 参数时间戳转换成的日期对象
-        Y = tmDate.getFullYear(),
-        m = tmDate.getMonth() + 1,
-        d = tmDate.getDate(),
-        H = tmDate.getHours(),
-        i = tmDate.getMinutes(),
-        s = tmDate.getSeconds();
-      // if (timestampDiff < 60) {
-      //   // 一分钟以内
-      //   return '刚刚';
-      // } else if (timestampDiff < 3600) {
-      //   // 一小时前之内
-      //   return Math.floor(timestampDiff / 60) + '分钟前';
-      // } else 
-      if (
-        curDate.getFullYear() == Y &&
-        curDate.getMonth() + 1 == m &&
-        curDate.getDate() == d
-      ) {
-        return (
-          '今天 ' +
-          ((String(H).length == 1 ? '0' : '') + H) +
-          ':' +
-          ((String(i).length == 1 ? '0' : '') + i)
-        );
-      } else {
-        var newDate = new Date((curTimestamp - 86400) * 1000); // 参数中的时间戳加一天转换成的日期对象
-        if (
-          newDate.getFullYear() == Y &&
-          newDate.getMonth() + 1 == m &&
-          newDate.getDate() == d
-        ) {
-          return (
-            '昨天 ' +
-            ((String(H).length == 1 ? '0' : '') + H) +
-            ':' +
-            ((String(i).length == 1 ? '0' : '') + i)
-          );
-        } else if (curDate.getFullYear() == Y) {
-          return (
-            (String(m).length == 1 ? '0' : '') +
-            m +
-            '-' +
-            ((String(d).length == 1 ? '0' : '') + d) +
-            ' ' +
-            ((String(H).length == 1 ? '0' : '') + H) +
-            ':' +
-            ((String(i).length == 1 ? '0' : '') + i)
-          );
-        } else {
-          return (
-            Y +
-            '年' +
-            ((String(m).length == 1 ? '0' : '') + m) +
-            '月' +
-            ((String(d).length == 1 ? '0' : '') + d) +
-            '日 ' +
-            ((String(H).length == 1 ? '0' : '') + H) +
-            ':' +
-            ((String(i).length == 1 ? '0' : '') + i)
-          );
-        }
-      }
-    }
+  // ❌ 删除 filters,改用 methods
+  props: {
+    type: 0
   },
   data() {
     return {
-		 lahei: false,//拉黑
+      lahei: false,//拉黑
       checked: [],
       checkedlist: [],
       is_show: false,
@@ -721,8 +666,10 @@ export default {
       showChangeNickName: false,//显示修改我在本群昵称
       showChangeGroupName: false,//显示修改群昵称
       show_member_info: false,//显示群成员信息
-	  myAuto : '',
-	  isPlay : false,
+      myAuto: '',
+      isPlay: false,
+      showModal: false,
+      userList: []
     };
   },
   computed: {
@@ -738,9 +685,9 @@ export default {
     },
     words() {
       if (this.is_show === false) {
-        return "查看全部";
+        return this.$t('cha_kan_quan_bu');
       } else if (this.is_show === true) {
-        return "收起全部";
+        return this.$t('shou_qi_quan_bu');
       } else if (this.is_show === "") {
         return null;
       } else {
@@ -774,8 +721,6 @@ export default {
         if ((this.selectedChat ? this.selectedChat.type : '') == 1) {
           this.getGroupInfo();
         }
-        // console.log("独自好友聊天ID", this.getChatFriendId);
-        // console.log("群聊ID", this.selectedChat.list_id);
       },
       immediate: true,
     }
@@ -792,49 +737,135 @@ export default {
   },
   methods: {
     ...mapActions(['selectFriend2', 'fetchCharList', 'fetchFriendList']),
-	// 播放语音
-	playVoice(msg,index) {
-		this.isPlay = !this.isPlay
-		// this.$refs[`videoplay${index}`].style.cssText = "color: red; "
-		this.$refs[`videoplay${index}`][0].style.cssText = "color: red;margin-right: 10px;font-size: 18px"
-		this.$refs[`videoplay${index}`][0].setAttribute("class", "el-icon-video-pause"); //'el-icon-video-pause':'el-icon-video-play'
-		this.myAuto =  new Audio(chatUrl + msg.content.full_url)
-		if (this.isPlay) {
-		        this.myAuto.play();
-		        this.palyEnd(index);
-		      } else {
-		        this.myAuto.pause();
-		        this.palyEnd(index);
-		      }
-	},
-	palyEnd(index) {
-	      this.myAuto.addEventListener('ended', () => {
-			  this.isPlay = !this.isPlay
-	        this.$refs[`videoplay${index}`][0].style.cssText = "margin-right: 10px;font-size: 18px"
-	        this.$refs[`videoplay${index}`][0].setAttribute("class", "el-icon-video-play"); //'el-icon-video-pause':'el-icon-video-play'
-	      });
-	    },
+    
+    // ⭐ 新增: 将 filter time 改为 method formatTime
+    formatTime(timestamp) {
+      timestamp = new Date(timestamp).valueOf() / 1000;
+      let curTimestamp = parseInt(new Date().getTime() / 1000), //当前时间戳
+        timestampDiff = curTimestamp - timestamp, // 参数时间戳与当前时间戳相差秒数
+        curDate = new Date(curTimestamp * 1000), // 当前时间日期对象
+        tmDate = new Date(timestamp * 1000), // 参数时间戳转换成的日期对象
+        Y = tmDate.getFullYear(),
+        m = tmDate.getMonth() + 1,
+        d = tmDate.getDate(),
+        H = tmDate.getHours(),
+        i = tmDate.getMinutes(),
+        s = tmDate.getSeconds();
+      
+      if (
+        curDate.getFullYear() == Y &&
+        curDate.getMonth() + 1 == m &&
+        curDate.getDate() == d
+      ) {
+        return (
+          this.$t('jin_tian') +
+          ((String(H).length == 1 ? '0' : '') + H) +
+          ':' +
+          ((String(i).length == 1 ? '0' : '') + i)
+        );
+      } else {
+        var newDate = new Date((curTimestamp - 86400) * 1000); // 参数中的时间戳加一天转换成的日期对象
+        if (
+          newDate.getFullYear() == Y &&
+          newDate.getMonth() + 1 == m &&
+          newDate.getDate() == d
+        ) {
+          return (
+            this.$t('zuo_tian') +
+            ((String(H).length == 1 ? '0' : '') + H) +
+            ':' +
+            ((String(i).length == 1 ? '0' : '') + i)
+          );
+        } else if (curDate.getFullYear() == Y) {
+          return (
+            (String(m).length == 1 ? '0' : '') +
+            m +
+            '-' +
+            ((String(d).length == 1 ? '0' : '') + d) +
+            ' ' +
+            ((String(H).length == 1 ? '0' : '') + H) +
+            ':' +
+            ((String(i).length == 1 ? '0' : '') + i)
+          );
+        } else {
+          return (
+            Y +
+            this.$t('nian') +
+            ((String(m).length == 1 ? '0' : '') + m) +
+            this.$t('yue') +
+            ((String(d).length == 1 ? '0' : '') + d) +
+            this.$t('ri') +
+            ((String(H).length == 1 ? '0' : '') + H) +
+            ':' +
+            ((String(i).length == 1 ? '0' : '') + i)
+          );
+        }
+      }
+    },
+    
+    // 播放语音
+    playVoice(msg, index) {
+      this.isPlay = !this.isPlay
+      this.$refs[`videoplay${index}`][0].style.cssText = "color: red;margin-right: 10px;font-size: 18px"
+      this.$refs[`videoplay${index}`][0].setAttribute("class", "el-icon-video-pause");
+      this.myAuto = new Audio(chatUrl + msg.content.full_url)
+      if (this.isPlay) {
+        this.myAuto.play();
+        this.palyEnd(index);
+      } else {
+        this.myAuto.pause();
+        this.palyEnd(index);
+      }
+    },
+    
+    //截取字符串
+    maskText(str) {
+      if (!str || str.length <= 4) return str;
+      return str.substring(0, 2) + '**' + str.substring(str.length - 2);
+    },
+    
+    palyEnd(index) {
+      this.myAuto.addEventListener('ended', () => {
+        this.isPlay = !this.isPlay
+        this.$refs[`videoplay${index}`][0].style.cssText = "margin-right: 10px;font-size: 18px"
+        this.$refs[`videoplay${index}`][0].setAttribute("class", "el-icon-video-play");
+      });
+    },
+    
+    yiduliebiao() {
+      groupState({
+        _token: localStorage.getItem('token'),
+        list_id: this.group_info.list_id,
+      }).then((res) => {
+        this.userList = res.data.chat_read
+        this.showModal = true
+      });
+    },
+    
     // 添加好友
     addFriend(item, index) {
-		if(this.group_info.can_add_friend == 1){
-			 this.$message.error('无权添加')
-			 return false;
-		}
+      if (this.group_info.can_add_friend == 1) {
+        this.$message.error(this.$t('wu_quan_tian_jia'))
+        return false;
+      }
       this.$refs['popover' + index][0].showPopper = false;
-      this.$prompt('你需要发送验证申请,等对方通过', '朋友验证', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$prompt(this.$t('ni_xu_yao_fa_song_yan_zheng_shen_qing_,_deng_dui_fang_tong_guo'), this.$t('peng_you_yan_zheng'), {
+        confirmButtonText: this.$t('que_ding'),
+        cancelButtonText: this.$t('qu_xiao')
       }).then(({ value }) => {
         friendAdd({
           user_id: item.user_id,
           is_type: 0,
-          content: value
+          content: value,
+          qun_id: this.group_info.list_id,
+          qun_type: 1
         }).then(res => {
-          this.$message.success('申请成功')
+          this.$message.success(this.$t('shen_qing_cheng_gong'))
           this.drawer_group_menu = false;
         })
       })
     },
+    
     async send(item, index) {
       this.$refs['popover' + index][0].showPopper = false;
       console.log("item.user_id", item.user_id);
@@ -851,8 +882,6 @@ export default {
         })
       }
 
-      // console.log(3)
-      // 
       if (msg) {
         this.$store.state.selectId = list_id
         this.$store.dispatch('selectSession', list_id)
@@ -862,12 +891,9 @@ export default {
       }
       this.drawer_group_menu = false;
     },
+    
     //设置群头像
     handleAvatar(file, list) {
-      //   if (!this.hasPerm()) {
-      //     this.$message.error("没有权限设置");
-      //     return;
-      //   }
       groupPhoto({
         _token: localStorage.getItem('token'),
         list_id: this.selectedChat.list_id,
@@ -885,6 +911,7 @@ export default {
         });
       });
     },
+    
     // 置顶聊天
     changeTop(e) {
       console.log('e', e);
@@ -892,31 +919,27 @@ export default {
         list_id: this.selectedChat.list_id,
         value: e ? 1 : 0
       }).then((res) => {
-        // this.$message.success(res.msg);
         this.group_info_all.top = e;
         this.drawer_group_menu = false;
         this.changeGroupName();
       });
     },
+    
     // 消息免打扰
     changeDisturb(e) {
       msgDisturb({
         list_id: this.selectedChat.list_id,
         value: e ? 1 : 0
       }).then((res) => {
-        // this.$message.success(res.msg);
         this.group_info_all.is_disturb = e;
         this.$forceUpdate();
         this.drawer_group_menu = false;
         this.changeGroupName();
       });
     },
+    
     // 群昵称
     saveGroupName() {
-      //   if (!this.hasPerm()) {
-      //     this.$message.error("没有权限设置");
-      //     return;
-      //   }
       setGroupData({
         list_id: this.selectedChat.list_id,
         type: 'name',
@@ -928,6 +951,7 @@ export default {
         this.changeGroupName();
       });
     },
+    
     // 保存我在本群昵称
     saveNickName() {
       saveGroupNickName({
@@ -940,6 +964,7 @@ export default {
         this.changeGroupName();
       });
     },
+    
     // 退出群聊
     removeGroup() {
       signOut({
@@ -950,6 +975,7 @@ export default {
         this.changeGroupName();
       })
     },
+    
     //   判断权限
     hasPerm() {
       if (!this.group_info_all.is_action && this.group_info_all.is_action != 2) {
@@ -958,10 +984,11 @@ export default {
         return true;
       }
     },
+    
     // 修改公告
     saveNotice() {
       if (!this.hasPerm()) {
-        this.$message.error('没有权限设置');
+        this.$message.error(this.$t('mei_you_quan_xian_she_zhi'));
         return;
       }
       setGroupData({
@@ -974,9 +1001,9 @@ export default {
         this.changeGroupName();
       });
     },
+    
     // 禁止加好友
     changeAddFriend(e) {
-      // console.log("e", e);return;
       editChange({
         list_id: this.selectedChat.list_id,
         value: e ? 1 : 0
@@ -985,7 +1012,7 @@ export default {
           console.log("res", res);
           this.group_info.can_add_friend = e;
           this.$forceUpdate();
-          this.$message.success('切换成功');
+          this.$message.success(this.$t('qie_huan_cheng_gong'));
           this.drawer_group_menu = false;
           this.changeGroupName();
         })
@@ -995,6 +1022,7 @@ export default {
           this.$forceUpdate();
         });
     },
+    
     // 全员禁言
     changeIsMsg(e) {
       groupIsMsg({
@@ -1004,7 +1032,7 @@ export default {
         .then((res) => {
           this.group_info.is_msg = e;
           this.$forceUpdate();
-          this.$message.success('切换成功');
+          this.$message.success(this.$t('qie_huan_cheng_gong'));
           this.drawer_group_menu = false;
           this.changeGroupName();
         })
@@ -1014,6 +1042,7 @@ export default {
           this.group_info.is_msg = !this.group.is_msg;
         });
     },
+    
     // 搜索群成员
     change_member() {
       let arr = [];
@@ -1028,48 +1057,53 @@ export default {
       })
       this.group_members = arr;
     },
+    
     del_member() {
       this.search_member = '';
       this.change_member()
     },
+    
     // 群管理菜单切换
     handleGroupClick(tab, event) {
       console.log(tab, event);
     },
+    
     // 打开视频播放
     open_show_video(item) {
       console.log(item);
       this.show_video = true;
       this.current_video = item.content;
     },
+    
     // 打开文件
     openFile(item) {
       window.open(this.chatUrl + this.selectedChat.list_id + '/' + item.content.url)
     },
+    
     showDel() {
       this.show_del = true;
       this.show_userinfo = false;
     },
-	// 拉黑好友
-	showlahei(friend_id){
-		var _this = this;
-		fetchlahei({
-			lahei:this.lahei,
-			friend_id:friend_id
-		}).then((res) => {
-			console.log(res)
-			if(res.code){
-				 this.$message.success('操作成功');
-			}else{
-				 this.$message.error('操作失败');
-			}
-			_this.fetchInfo()
-
+    
+    // 拉黑好友
+    showlahei(friend_id) {
+      var _this = this;
+      fetchlahei({
+        lahei: this.lahei,
+        friend_id: friend_id
+      }).then((res) => {
+        console.log(res)
+        if (res.code) {
+          this.$message.success(this.$t('cao_zuo_cheng_gong'));
+        } else {
+          this.$message.error(this.$t('cao_zuo_shi_bai'));
+        }
+        _this.fetchInfo()
       });
-	},
+    },
+    
     delFriend() {
       this.show_del = false;
-      // 删除好友，更新朋友列表，更新消息列表
       removeFriend({
         user_id: this.info.user_id
       }).then(res => {
@@ -1079,11 +1113,10 @@ export default {
         this.fetchCharList();
       })
     },
+    
     // 消息是否是图片
     isImage(con) {
-      // 如果是图片，则转换成图片
-      let reg =
-        /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i;
+      let reg = /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i;
       let reg2 = RegExp(/data:image\/.*;base64,/)
       if (reg.test(con) || reg2.test(con)) {
         return true;
@@ -1091,22 +1124,25 @@ export default {
         return false;
       }
     },
+    
     // 打开好友信息
     handleFriendInfo() {
       console.log("getChatFriendId", this.getChatFriendId);
       this.showInfo({ userId: this.getChatFriendId })
     },
+    
     changeGroupName() {
       this.fetchCharList(this.selectedChat.list_id || '');
       this.getGroupInfo();
     },
+    
     changeRemark(item, remark, index) {
-      this.$prompt('请输入备注信息', '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt(this.$t('qing_shu_ru_bei_zhu_xin_xi'), '', {
+        confirmButtonText: this.$t('que_ding'),
+        cancelButtonText: this.$t('qu_xiao'),
         inputPattern: /\S/,
         inputValue: remark,
-        inputErrorMessage: '备注信息不能为空'
+        inputErrorMessage: this.$t('bei_zhu_xin_xi_bu_neng_wei_kong')
       }).then(({ value }) => {
         setRemarks({
           content: value,
@@ -1120,22 +1156,20 @@ export default {
             return
           }
           this.fetchCharList(this.selectId || '');
-          // this.showInfo(item)
-          // this.fetchFriendList()
         });
       });
     },
+    
     // 群信息
     getGroupInfo() {
       getChatDetails({
         list_id: this.selectedChat.list_id
       }).then((res) => {
-        
         this.group_info = res.data.group;
-		console.log('res群信息', this.group_info.can_add_friend);
+        console.log(this.$t('res_qun_xin_xi'), this.group_info.can_add_friend);
         this.group_members = res.data.member;
+        
         // 群成员是否是好友
-        // 列出好友
         let friends = this.$store.state.friendlist;
         this.group_members.forEach(item => {
           friends.forEach(item_ => {
@@ -1144,15 +1178,16 @@ export default {
             }
           })
         });
+        
         this.group_info_all = res.data;
         this.group_info_all.is_disturb = Boolean(this.group_info_all.is_disturb);
         this.group_info_all.top = Boolean(this.group_info_all.top);
-        // 群头像
         this.group_info.is_photo = this.photoUrl + this.group_info.is_photo + '?_=' + Math.random();
         this.notice = res.data.group.notice;
         this.is_action = res.data.is_action;
       });
     },
+    
     // 转让群主
     handleTrans() {
       getGroupAdmin({
@@ -1173,21 +1208,23 @@ export default {
           this.$refs.group_trans.close();
         });
     },
+    
     handleTransed(user) {
       transferQun({
         trans_user_id: user[0],
         list_id: this.selectedChat.list_id
       }).then((res) => {
-        this.$message.success('操作成功');
-
+        this.$message.success(this.$t('cao_zuo_cheng_gong'));
         this.fetchCharList(this.selectId || '');
       });
     },
+    
     // 打开群管理
     handleManage() {
       this.$refs.manage.open();
       this.$refs.manage.getInfo(this.selectedChat.list_id);
     },
+    
     // 设置管理员
     handleSetManage() {
       getGroupAdmin({
@@ -1208,22 +1245,25 @@ export default {
           this.$refs.group_manage.close();
         });
     },
+    
     handleSetManaged(users) {
       setGroupAdmin({
         users: JSON.stringify(users),
         list_id: this.selectedChat.list_id,
         type: 1
       }).then((res) => {
-        this.$message.success('操作成功');
+        this.$message.success(this.$t('cao_zuo_cheng_gong'));
         this.fetchCharList(this.selectId || '');
         this.drawer_group_menu = false;
         this.changeGroupName();
       });
     },
+    
     // 禁言1
     handleNoSend(userid) {
       this.handleDontSend([userid]);
     },
+    
     // 禁言2
     handleDontSend(users) {
       setGroupAdmin({
@@ -1231,10 +1271,11 @@ export default {
         list_id: this.selectedChat.list_id,
         type: 2
       }).then((res) => {
-        this.$message.success('操作成功');
+        this.$message.success(this.$t('cao_zuo_cheng_gong'));
         this.fetchCharList(this.selectId || '');
       });
     },
+    
     // 邀请群成员
     handleInvite() {
       this.drawer_group_menu = false;
@@ -1243,10 +1284,12 @@ export default {
       ]);
       this.$refs.selectInvite.open(this.defaultList);
     },
+    
     // 移除群成员2
     handleRemove2(userid) {
       this.handleRemoved([userid]);
     },
+    
     // 移除群成员
     handleRemove() {
       this.drawer_group_menu = false;
@@ -1268,32 +1311,33 @@ export default {
           this.$refs.group_member.close();
         });
     },
+    
     // 踢出成员
     handleRemoved(users) {
       removeChat({
         users: JSON.stringify(users),
         list_id: this.selectedChat.list_id
       }).then((res) => {
-        this.$message.success('操作成功');
+        this.$message.success(this.$t('cao_zuo_cheng_gong'));
         this.fetchCharList(this.selectId || '');
       });
     },
+    
     showInfo(item) {
       console.log("item", item);
       fetchInfo({
         user_id: item.userId,
         in: 0
       }).then((res) => {
-        
         this.info = {
           ...res.data
         };
-		console.log('res信息', this.info.lahei);
-		if(this.info.lahei == 1){
-			this.lahei = true;
-		}else{
-			this.lahei = false;
-		}
+        console.log(this.$t('res_xin_xi'), this.info.lahei);
+        if (this.info.lahei == 1) {
+          this.lahei = true;
+        } else {
+          this.lahei = false;
+        }
         this.$forceUpdate();
       });
     },
@@ -1313,13 +1357,12 @@ export default {
         this.fetchCharList(this.selectId || '');
       });
     },
+    
     handleOk(data) {
-
       if (this.checkedlist.length > 0) {
         for (var i = 0; i < this.checkedlist.length; i++) {
           console.log(this.checkedlist[i])
           if (this.checkedlist[i].indexOf(".jpg") != -1 || this.checkedlist[i].indexOf(".png") != -1) {
-
             this.currentRow.content.h = 300;
             this.currentRow.content.save_pic_path = '';
             this.currentRow.content.list_id = this.selectedChat.list_id;
@@ -1341,7 +1384,6 @@ export default {
           }).then((res) => {
             this.fetchCharList(this.selectId || '');
           });
-
         }
       } else {
         textMsgs({
@@ -1357,19 +1399,15 @@ export default {
           this.fetchCharList(this.selectId || '');
         });
       }
-
-
-
-
-
     },
+    
     showHide() {
-
     },
+    
     handleOption(event, item) {
-      this.menuVisible = false; // 先把模态框关死，目的是 第二次或者第n次右键鼠标的时候 它默认的是true
-      this.menuVisible = true; // 显示模态窗口，跳出自定义菜单栏
-      event.preventDefault(); //关闭浏览器右键默认事件
+      this.menuVisible = false;
+      this.menuVisible = true;
+      event.preventDefault();
       this.currentRow = {
         ...item
       };
@@ -1377,29 +1415,32 @@ export default {
       var menu = document.querySelector('.contextmenu-msg_menu');
       this.styleMenu(menu, event);
     },
+    
     foo() {
-      // 取消鼠标监听事件 菜单栏
       this.menuVisible = false;
-      document.removeEventListener('click', this.foo); // 关掉监听，
+      document.removeEventListener('click', this.foo);
     },
+    
     styleMenu(menu, event) {
       if (event.clientX > 1800) {
         menu.style.left = event.clientX - 100 + 'px';
       } else {
         menu.style.left = event.clientX + 1 + 'px';
       }
-      document.addEventListener('click', this.foo); // 给整个document新增监听鼠标事件，点击任何位置执行foo方法
+      document.addEventListener('click', this.foo);
       if (event.clientY > 700) {
         menu.style.top = event.clientY - 30 + 'px';
       } else {
         menu.style.top = event.clientY - 10 + 'px';
       }
     },
+    
     handleShare(item) {
       this.show_userinfo = false;
       this.shareItem = item;
       this.$refs.handleShare.open();
     },
+    
     handleShared(data) {
       sendCard({
         users: JSON.stringify([this.shareItem.userId + '']),
@@ -1410,28 +1451,23 @@ export default {
           .join()
       }).then((res) => {
         this.fetchCharList(this.selectId || '');
-        this.$message.success('发送成功');
+        this.$message.success(this.$t('fa_song_cheng_gong'));
       });
     },
+    
     duo(msg, type) {
-
       if (type == true) {
-
         this.checkedlist.push(msg)
-
       } else {
-
       }
       console.log(this.checkedlist);
     },
+    
     duoxuan(type) {
-
       this.handleSetting(type)
-
     },
+    
     handleSetting(type) {
-
-
       const data = {
         list_id: this.currentRow.list_id,
         type: this.currentRow.msg_type,
@@ -1458,18 +1494,20 @@ export default {
           }
           return;
         }
-        this.$message.toast('不支持复制该类型文件');
+        this.$message.toast(this.$t('bu_zhi_chi_fu_zhi_gai_lei_xing_wen_jian'));
         return;
       }
+
       let fetchUrl;
       if (type == 2) {
         fetchUrl = saveStore;
       } else if (type == 1) {
         fetchUrl = withdraw;
+      } else if (type == 6) {
+        fetchUrl = dianzan;
       } else {
         this.$refs.selectUser.open();
         return;
-        // fetchUrl = deleteChat
       }
       // todo撤回消息type == 1群聊普通0私聊
       data.type = this.selectedChat.type;
@@ -1477,18 +1515,22 @@ export default {
         if (type == 1) {
           this.$store.dispatch('selectSession', this.selectId);
         } else if (type == 2) {
-          if (res.msg == '收藏成功') {
-            this.$message.success('收藏成功');
+          if (res.msg == this.$t('shou_cang_cheng_gong')) {
+            this.$message.success(this.$t('shou_cang_cheng_gong'));
           } else {
             this.$message.warning(res.msg);
           }
+        } else if (type == 6) {
+          this.$store.dispatch('selectSession', this.selectId);
         }
       });
     },
+    
     kickOut() {
       console.log(this.currentRow, 'this.currentRow')
       this.handleRemoved([this.currentRow.userId]);
     },
+    
     copyText(str) {
       const el = document.createElement('textarea');
       el.value = str;
@@ -1499,8 +1541,9 @@ export default {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      this.$message.success('复制成功');
+      this.$message.success(this.$t('fu_zhi_cheng_gong'));
     },
+    
     //  在发送信息之后，将输入的内容中属于表情的部分替换成emoji图片标签
     //  再经过v-html 渲染成真正的图片
     replaceFace(con) {
@@ -1549,6 +1592,44 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.heart-icon {
+  animation: heartBeat 0.6s ease-in-out;
+  display: flex;
+  align-items: center;
+  position: relative;
+      width: 35px;
+    height: 40px;
+    font-size: large;
+    margin-top: 10px;
+}
+
+/* 数量标签样式 */
+.like-count {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background-color: #ff4444;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 红心缩放动画 */
+@keyframes heartBeat {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .align-center {
   display: flex;
   align-items: center;

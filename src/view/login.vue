@@ -1,6 +1,26 @@
 <template>
   <div class="login-container">
+    
+
+    <div style="display:flex;justify-content: center;margin: auto;height: 600px;width: 1200px;border-radius: 40px;">
+      <div class="banner">
+      <el-carousel class="image-banner" arrow="never" trigger="click">
+        <el-carousel-item
+          v-for="(item, index) in banner"
+          :key="index"
+          class="banner-item"
+        >
+          <div class="image-item">
+            <img :src="item" alt="" />
+          </div>
+        </el-carousel-item>
+      </el-carousel>
+    </div>
     <div class="login-form">
+      <div style="display: flex;flex-direction: row-reverse;margin-right: 50px;margin-top: -70px;">
+        <LanguageSwitcher />
+      </div>
+      
       <div class="login-content">
         <div class="login-tab">
           <div
@@ -8,14 +28,14 @@
             :class="tab_active == 0 ? 'active' : ''"
             @click="tab_active = 0"
           >
-            密码登录
+            {{$t('mi_ma_deng_lu')}}
           </div>
           <div
             class="tab-item"
             :class="tab_active == 1 ? 'active' : ''"
             @click="tab_active = 1"
           >
-            账号注册
+            {{$t('zhang_hao_zhu_ce')}}
           </div>
         </div>
         <div v-if="tab_active == 0" class="login-item">
@@ -24,7 +44,7 @@
             <input
               v-model="form.username"
               class="login-input"
-              placeholder="请输入用户名/手机号码"
+              :placeholder="$t('qing_shu_ru_yong_hu_ming_/_shou_ji_hao_ma')"
             />
           </div>
           <div class="input-item">
@@ -33,7 +53,7 @@
               v-model="form.password"
               :type="show_pwd ? 'text' : 'password'"
               class="login-input"
-              placeholder="请输入密码"
+              :placeholder="$t('qing_shu_ru_mi_ma')"
             />
             <img
               v-if="show_pwd"
@@ -47,13 +67,13 @@
             />
           </div>
           <div class="tips">{{ tips_msg }}</div>
-          <div class="login-btn" @click="handleLogin">登录</div>
+          <div class="login-btn" @click="handleLogin">{{$t('deng_lu')}}</div>
           <div class="youke-login" @click="fetchLogin(false)">
-            <span>游客登录</span>
+            <span>{{$t('you_ke_deng_lu')}}</span>
           </div>
-          <a href="http://45.113.110.66/privacy/index.html" class="xieyi">
-            <span>使用即代表同意</span>
-            《使用条款和隐私政策》</a
+          <a href="" class="xieyi">
+            <span>{{$t('shi_yong_ji_dai_biao_tong_yi')}}</span>
+            《{{$t('shi_yong_tiao_kuan_he_yin_si_zheng_ce')}}</a
           >
         </div>
         <div v-if="tab_active == 1 && !next" class="login-item">
@@ -62,7 +82,7 @@
             <input
               v-model="reg_form.username"
               class="login-input"
-              placeholder="请输入用户名/手机号码"
+              :placeholder="$t('qing_shu_ru_yong_hu_ming_/_shou_ji_hao_ma')"
             />
           </div>
           <div class="input-item">
@@ -71,7 +91,7 @@
               v-model="reg_form.password"
               :type="show_pwd ? 'text' : 'password'"
               class="login-input"
-              placeholder="请设置密码,不小于5位"
+              :placeholder="$t('qing_she_zhi_mi_ma_,_bu_xiao_yu_5_wei')"
             />
             <img
               v-if="show_pwd"
@@ -85,7 +105,7 @@
             />
           </div>
           <div class="tips">{{ tips_msg2 }}</div>
-          <div class="login-btn" @click="handleReg">下一步</div>
+          <div class="login-btn" @click="nextStep">{{$t('zhu_ce')}}</div>
         </div>
         <div v-if="tab_active == 1 && next" class="login-item">
           <el-upload
@@ -108,7 +128,7 @@
             <input
               v-model="reg_form.nickname"
               class="login-input"
-              placeholder="请设置用户昵称,不小于5位"
+              :placeholder="$t('qing_she_zhi_yong_hu_ni_cheng_,_bu_xiao_yu_5_wei')"
             />
           </div>
           <div class="sex-item">
@@ -117,7 +137,7 @@
               :class="{ 'sex-active': reg_form.sex == 0 }"
               @click="reg_form.sex = 0"
             >
-              <span>男</span>
+              <span>{{$t('nan')}}</span>
               <img src="../assets/images/login/man.png" />
             </div>
             <div
@@ -125,37 +145,28 @@
               :class="{ 'sex-active': reg_form.sex == 1 }"
               @click="reg_form.sex = 1"
             >
-              <span>女</span>
+              <span>{{$t('nv')}}</span>
               <img src="../assets/images/login/woman.png" />
             </div>
           </div>
 
-          <div class="step-btn" @click="lastStep">上一步</div>
-          <div class="login-btn" @click="nextStep">完成注册</div>
+          <div class="step-btn" @click="lastStep">{{$t('shang_yi_bu')}}</div>
+          <div class="login-btn" @click="nextStep">{{$t('wan_cheng_zhu_ce')}}</div>
         </div>
       </div>
     </div>
-
-    <div class="banner">
-      <el-carousel class="image-banner" arrow="never" trigger="click">
-        <el-carousel-item
-          v-for="(item, index) in banner"
-          :key="index"
-          class="banner-item"
-        >
-          <div class="image-item">
-            <img :src="item" alt="" />
-          </div>
-        </el-carousel-item>
-      </el-carousel>
     </div>
   </div>
 </template>
 
 <script>
 import { login, regPhoto, reg, updatePhoto } from '@/api';
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { mapActions } from 'vuex';
 export default {
+  components: {
+    LanguageSwitcher
+  },
   data () {
     return {
       loading: false,
@@ -165,11 +176,11 @@ export default {
         client_id: ''
       },
       banner: [
-        require('../assets/images/login/10004.png'),
-        require('../assets/images/login/10005.png'),
-        require('../assets/images/login/10006.png'),
-        require('../assets/images/login/10007.png'),
-        require('../assets/images/login/10008.png')
+        require('../assets/images/login/loginbag.jpg'),
+        // require('../assets/images/login/10005.png'),
+        // require('../assets/images/login/10006.png'),
+        // require('../assets/images/login/10007.png'),
+        // require('../assets/images/login/10008.png')
       ],
       tab_active: 0,
       show_pwd: false,
@@ -232,15 +243,15 @@ export default {
     // 注册第一步
     handleReg () {
       if (!this.checkIn2) {
-        this.tips_msg2 = '请输入正确格式的账号密码';
+        this.tips_msg2 = this.$t('qing_shu_ru_zheng_que_ge_shi_de_zhang_hao_mi_ma');
         return false;
       }
       if (!/^\w{1,20}$/.test(this.reg_form.username)) {
-        this.tips_msg2 = '密聊号只能包括下划线、数字、字母,并且不能超过20个';
+        this.tips_msg2 = this.$t('mi_liao_hao_zhi_neng_bao_kuo_xia_hua_xian_shu_zi_zi_mu_,_bing_qie_bu_neng_chao_guo_20_ge');
         return;
       }
       if (!/^\w{1,20}$/.test(this.reg_form.password)) {
-        this.tips_msg2 = '密码只能包括下划线、数字、字母,长度6-20位';
+        this.tips_msg2 = this.$t('mi_ma_zhi_neng_bao_kuo_xia_hua_xian_shu_zi_zi_mu_,_chang_du_6-20_wei');
         return;
       }
       // this.loading = true;
@@ -248,14 +259,14 @@ export default {
     },
     // 完成注册
     nextStep () {
-      if (!this.reg_form.nickname || this.reg_form.nickname < 6) {
-        this.$message.error('请输入正确的昵称');
+      if (!this.reg_form.username || this.reg_form.username.length < 6) {
+        this.$message.error(this.$t('qing_shu_ru_zheng_que_de_ni_cheng'));
         return;
       }
-      if (!this.new_avatar) {
-        this.$message.error('请上传用户头像');
-        return;
-      }
+      // if (!this.new_avatar) {
+      //   this.$message.error('请上传用户头像');
+      //   return;
+      // }
 	 
 	 
 	  
@@ -288,7 +299,7 @@ export default {
     },
     handleLogin () {
       if (!this.checkIn) {
-        this.tips_msg = '请输入正确格式的账号密码';
+        this.tips_msg = this.$t('qing_shu_ru_zheng_que_ge_shi_de_zhang_hao_mi_ma');
         return false;
       }
       this.loading = true;
@@ -312,7 +323,7 @@ export default {
       )
         .then((res) => {
 			this.$message.success(res.msg)
-          console.log("res登陆", res);
+          console.log(this.$t('res_deng_lu'), res);
           this.loading = false;
           window.localStorage.setItem('token', res.data.token);
           this.$router.push({ path: '/chat' });
@@ -379,37 +390,39 @@ export default {
 }
 .banner {
   flex: 1;
-  min-width: 800px;
+  width: 65%;
   .image-banner {
-    height: 700px;
+    height: 600px;
     width: 100%;
     .banner-item {
-      height: 700px;
+      height: 600px;
       width: 100%;
     }
     .image-item {
       width: 100%;
-      height: 700px;
+          height: 600px;
       display: flex;
       justify-content: center;
       align-items: center;
       img {
-        width: 800px;
-        height: auto;
+        width: 100%;
+            height: 600px;
+            border-radius: 40px 0px 0px 40px;
       }
     }
   }
 }
 .login-form {
-  width: 537px;
-  height: 100%;
+  border-radius: 0px 40px 40px 0px;
+  background-color: #fff;
+  width: 35%;
   box-sizing: border-box;
   flex-shrink: 0;
-  padding-top: 18vh;
-  background: url("../assets/images/login/10013.png") no-repeat 40px 40px;
+  padding-top: 8vh;
+  // background: url("../assets/images/login/10013.png") no-repeat 40px 40px;
   background-size: 220px 220px;
   .login-content {
-    margin-left: 175px;
+    margin-left: 75px;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
@@ -538,7 +551,19 @@ export default {
   width: 100%;
   height: 100%;
   background: url("../assets/images/login/10012.png") no-repeat;
+  background-blend-mode: overlay; /* 混合模式 */
   background-size: cover;
   display: flex;
+  position: fixed;
+}
+.login-container::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00c3ff42; /* 半透明白色遮罩 */
+  z-index: -1; /* 确保遮罩在内容后面 */
 }
 </style>

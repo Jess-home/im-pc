@@ -1,6 +1,6 @@
 <template>
   <div class="col-page">
-    <div class="col-header">群聊</div>
+    <div class="col-header">{{$t('qun_liao')}}</div>
     <div class="col-list">
       <template v-if="info">
         <div

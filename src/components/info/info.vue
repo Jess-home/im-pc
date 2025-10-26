@@ -22,7 +22,7 @@
           </div>
           <div class="right" @click="show_del = true">
             <i class="iconfont iconIMweb_deldte" style="margin-right:6px;font-size:20px;"></i>
-            <span>删除好友</span>
+            <span>{{$t('shan_chu_hao_you')}}</span>
           </div>
         </div>
         <div class="detInfo">
@@ -30,12 +30,12 @@
             <span>U I D</span>
             <span>{{ info.id }}</span>
           </div>
-          <div class="area"><span>昵称</span><span>{{ info.username }}</span></div>
-          <div class="area"><span>来源</span><span>{{ info.from }}</span></div>
+          <div class="area"><span>{{$t('ni_cheng')}}</span><span>{{ info.username }}</span></div>
+          <div class="area"><span>{{$t('lai_yuan')}}</span><span>{{ info.from }}</span></div>
           <!-- <div class="remark">
-          <span>备&nbsp&nbsp&nbsp注</span>
+          <span>{{$t('bei')}}&nbsp&nbsp&nbsp{{$t('zhu')}}</span>
           <span
-            title="点击修改备注"
+            :title="$t('dian_ji_xiu_gai_bei_zhu')"
             style="cursor:pointer"
             @click="changeRemark(info)"
           >{{ info.remark }}
@@ -46,10 +46,10 @@
 
         <div class="change-btns">
           <button class="primarybtn default large" @click.stop="handleShare">
-            <span>发送名片</span>
+            <span>{{$t('fa_song_ming_pian')}}</span>
           </button>
           <button class="primarybtn large" @click.stop="send">
-            <span>发消息</span>
+            <span>{{$t('fa_xiao_xi')}}</span>
           </button>
         </div>
       </div>
@@ -57,35 +57,35 @@
         placement="top"
         width="160"
         v-model="visible">
-        <h3 style="text-align: center;font-size: 18px;font-weight: bold;color: #f78989;margin:10px;">重要提示</h3>
-        <p class="font-size: 20px;">删除好友及相关的会话数据并且不能恢复，确认删除吗？</p>
+        <h3 style="text-align: center;font-size: 18px;font-weight: bold;color: #f78989;margin:10px;">{{$t('zhong_yao_ti_shi')}}</h3>
+        <p class="font-size: 20px;">{{$t('shan_chu_hao_you_ji_xiang_guan_de_hui_hua_shu_ju_bing_qie_bu_neng_hui_fu_que_ren_shan_chu_ma')}}</p>
         <div style="text-align: right; margin: 0;font-size: 20px;">
-          <el-button type="info" size="mini" @click="visible = false">取消</el-button>
-          <el-button type="danger" size="mini" @click="delFriend">确定</el-button>
+          <el-button type="info" size="mini" @click="visible = false">{{$t('qu_xiao')}}</el-button>
+          <el-button type="danger" size="mini" @click="delFriend">{{$t('que_ding')}}</el-button>
         </div>
         <div class="option" slot="reference">
               <div
                 class="del_btn"
               >
-                <span>删除</span>
+                <span>{{$t('shan_chu')}}</span>
               </div>
             </div>
       </el-popover> -->
     </div>
-    <selectUser ref="selectUser" title="分享名片" tip="分别转发给" :multiple="false" @handleOk="handleOk"></selectUser>
+    <selectUser ref="selectUser" :title="$t('fen_xiang_ming_pian')" :tip="$t('fen_bie_zhuan_fa_gei')" :multiple="false" @handleOk="handleOk"></selectUser>
     <el-dialog title="" top="30vh" custom-class="custom-dialog" width="300px" :visible.sync="show_del">
       <div class="dialog-body">
         <div class="dialog-item">
-          确认删除当前好友，
+          {{$t('que_ren_shan_chu_dang_qian_hao_you')}}
         </div>
         <div class="dialog-item">
-          同时删除与该好友的所有聊天记录？
+          {{$t('tong_shi_shan_chu_yu_gai_hao_you_de_suo_you_liao_tian_ji_lu')}}
         </div>
       </div>
       <div slot="footer" class="change-btns dialog-footer">
-        <button class="primarybtn default" @click="show_del = false">取 消</button>
+        <button class="primarybtn default" @click="show_del = false">{{$t('qu_xiao')}}</button>
         <!-- TODO修改用户信息 -->
-        <button class="primarybtn" type="primary" @click="delFriend">删除</button>
+        <button class="primarybtn" type="primary" @click="delFriend">{{$t('shan_chu')}}</button>
       </div>
     </el-dialog>
   </div>
@@ -147,7 +147,7 @@ export default {
           return item.list_id
         }).join()
       }).then(res => {
-        this.$message.success('发送成功')
+        this.$message.success(this.$t('fa_song_cheng_gong'))
       })
     },
     fetchInfo() {
@@ -169,12 +169,12 @@ export default {
       this.$refs.selectUser.open()
     },
     changeRemark(item) {
-      this.$prompt('请输入备注信息', '', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt(this.$t('qing_shu_ru_bei_zhu_xin_xi'), '', {
+        confirmButtonText: this.$t('que_ding'),
+        cancelButtonText: this.$t('qu_xiao'),
         inputPattern: /\S/,
         inputValue: item.remark,
-        inputErrorMessage: '备注信息不能为空'
+        inputErrorMessage: this.$t('bei_zhu_xin_xi_bu_neng_wei_kong')
       }).then(({ value }) => {
         setRemarks({
           content: value,

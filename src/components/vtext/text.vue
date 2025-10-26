@@ -9,7 +9,7 @@
       <!-- TODO 对话框功能 -->
       <i
         class="iconfont iconIMweb_expression upload-file-icon"
-        title="选择表情"
+        :title="$t('xuan_ze_biao_qing')"
         :style="{
           color:showEmoji?'#7bbbff':'#7c7c7c'
         }"
@@ -21,7 +21,7 @@
         @click="sendClick"
       ></i> -->
       <i class="iconfont iconIMweb_picture upload-file-icon" 
-        title="发送图片"
+        :title="$t('fa_song_tu_pian')"
       @click="uploadImage">
         <input
         id="upload_file"
@@ -34,7 +34,7 @@
       />
       </i>
       <i class="iconfont iconIMweb_file upload-file-icon" 
-      title="发送文件"
+      :title="$t('fa_song_wen_jian')"
       @click="uploadFile">
         <input
         id="upload_file1"
@@ -45,7 +45,7 @@
       />
       </i>
       <i class="iconfont iconIMweb_video upload-file-icon" 
-      title="发送视频"
+      :title="$t('fa_song_shi_pin')"
       @click="uploadVideo">
         <input
         id="upload_file2"
@@ -62,10 +62,10 @@
         color:show_concat?'#7bbbff':'#7c7c7c'
       }"
       @click="openSelectFriend"></i>
-      <i title="推荐好友" @click="getFriendList" class="iconfont iconIMweb_grcard upload-file-icon" :style="{
+      <i :title="$t('tui_jian_hao_you')" @click="getFriendList" class="iconfont iconIMweb_grcard upload-file-icon" :style="{
         color:show_friend?'#7bbbff':'#7c7c7c'
       }"></i>
-      <i title="分享群聊" class="iconfont iconfont iconIMweb_qcard upload-file-icon" 
+      <i :title="$t('fen_xiang_qun_liao')" class="iconfont iconfont iconIMweb_qcard upload-file-icon" 
       @click="getChatList"
       :style="{
         color:show_group?'#7bbbff':'#7c7c7c'
@@ -93,12 +93,12 @@
       <transition name="showbox">
         <div class="concat-content" v-show="show_concat">
           <div class="concat-title">
-            选择要提醒的人
+            {{$t('xuan_ze_yao_ti_xing_de_ren')}}
             <i class="concat-close iconfont iconIMweb_cancel_cancel" @click="show_concat = false"></i>
           </div>
           <div class="concat-input">
             <el-input
-              placeholder="请输入名称"
+              :placeholder="$t('qing_shu_ru_ming_cheng')"
               prefix-icon="el-icon-search"
               @input="change_member"
               v-model="search_member">
@@ -109,7 +109,7 @@
                <el-avatar class="concat-avatar" size="large" :src="all_avatar"></el-avatar>
                <div>
                 <!-- {{item}} -->
-                <div> 所有人</div>
+                <div> {{$t('suo_you_ren')}}</div>
                </div>
             </div>
             <div class="concat-item" v-for="(item,index) in member_list" :key="index" @click="chooseUser(item)">
@@ -129,12 +129,12 @@
       <transition name="showbox">
         <div class="concat-content" v-show="show_friend">
           <div class="concat-title">
-            选择要推荐的好友
+            {{$t('xuan_ze_yao_tui_jian_de_hao_you')}}
             <i class="concat-close iconfont iconIMweb_cancel_cancel" @click="show_friend = false"></i>
           </div>
           <div class="concat-input">
             <el-input
-              placeholder="请输入名称"
+              :placeholder="$t('qing_shu_ru_ming_cheng')"
               prefix-icon="el-icon-search"
               @input="change_friend"
               v-model="search_friend">
@@ -159,12 +159,12 @@
       <transition name="showbox">
         <div class="concat-content" v-show="show_group">
           <div class="concat-title">
-            选择要推荐的群聊
+            {{$t('xuan_ze_yao_tui_jian_de_qun_liao')}}
             <i class="concat-close iconfont iconIMweb_cancel_cancel" @click="show_group = false"></i>
           </div>
           <div class="concat-input">
             <el-input
-              placeholder="请输入名称"
+              :placeholder="$t('qing_shu_ru_ming_cheng')"
               prefix-icon="el-icon-search"
               @input="change_group"
               v-model="search_group">
@@ -212,15 +212,15 @@
       class="send"
       @click.stop.prevent="send"
     >
-      <span class="send_text">Ctrl+Enter：换行 | Enter：发送</span>
-      <span class="send_btn">发送</span>
+      <span class="send_text">Ctrl+Enter：{{$t('huan_hang')}}| Enter：{{$t('fa_song')}}</span>
+      <span class="send_btn">{{$t('fa_song')}}</span>
     </div>
     <transition name="appear">
       <div
         v-show="warn"
         class="warn"
       >
-        <div class="description">不能发送空白信息</div>
+        <div class="description">{{$t('bu_neng_fa_song_kong_bai_xin_xi')}}</div>
       </div>
     </transition>
   </div>
@@ -242,7 +242,7 @@ export default {
       photoUrl: photoUrl,
       chatUrl: chatUrl,
       content: '',
-      reply: '未找到',
+      reply: this.$t('wei_zhao_dao'),
       frequency: 0,
       warn: false,
       showEmoji: false,
@@ -384,7 +384,7 @@ export default {
         users: JSON.stringify([item.user_id + '']),
         list_id:this.selectedChat.list_id
       }).then(res => {
-        console.log("res分享卡片", res);
+        console.log(this.$t('res_fen_xiang_ka_pian'), res);
         this.fetchCharList(this.selectedChat.list_id || '');
       })
     },
@@ -395,7 +395,7 @@ export default {
         list_ids: JSON.stringify([item.list_id + '']),
         list_id:this.selectedChat.list_id
       }).then(res => {
-        console.log("res分享群聊卡片", res);
+        console.log(this.$t('res_fen_xiang_qun_liao_ka_pian'), res);
         this.fetchCharList(this.selectedChat.list_id || '');
       })
     },
@@ -451,7 +451,7 @@ export default {
       getChatDetails({
         list_id:this.selectedChat.list_id
       }).then(res => {
-        console.log("res群成员", res);
+        console.log(this.$t('res_qun_cheng_yuan'), res);
         this.member_list = res.data.member;
         this.all_memeber_list = res.data.member;
         this.show_concat = true;
@@ -460,7 +460,7 @@ export default {
     // 获取群聊
     getChatList() {
       getChatList().then(res => {
-        console.log("res群聊", res);
+        console.log(this.$t('res_qun_liao'), res);
         let arr = [];
         let data = res.data;
         data.forEach(item => {
@@ -476,7 +476,7 @@ export default {
     // 搜索朋友
     getFriendList() {
       getFriendList().then(res => {
-        console.log("res朋友", res);
+        console.log(this.$t('res_peng_you'), res);
         let data = res.data.data;
         let arr = [];
         for (let key in data) {
@@ -650,7 +650,7 @@ export default {
     },
     sendClick () {
       var msg = {
-        content: '[戳一戳]',
+        content: this.$t('[_chuo_yi_chuo_]'),
         type: 0
       }
 	  
@@ -660,7 +660,7 @@ export default {
         _token: localStorage.getItem('token'),
         content_type: 0,
         content: JSON.stringify({
-          text: '[戳一戳]'
+          text: this.$t('[_chuo_yi_chuo_]')
         }),
         msgItem_type: 0,
         _agent_id: 1
@@ -693,7 +693,7 @@ export default {
             _token: localStorage.getItem('token'),
             file: item
           }).then(res => {
-            console.log("res上传返回", res);
+            console.log(this.$t('res_shang_chuan_fan_hui'), res);
             _this.$refs.upload_file.value = '';
             if (res.err == 0) {
               let msg = {

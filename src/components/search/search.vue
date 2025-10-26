@@ -11,7 +11,7 @@
         v-model="search"
         type="text"
         class="searchInput"
-        placeholder="搜索"
+        :placeholder="$t('sou_suo')"
         @keyup="change"
       >
       <!-- <div
@@ -27,45 +27,44 @@
     <el-dropdown @command="handleCommand" >
       <div
         class="add-wrapper"
-        title="发起群聊"
+        :title="$t('fa_qi_qun_liao')"
       >
         <i class="el-icon-circle-plus-outline"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="b" class="drop-item">
           <i style="font-size:22px" class="iconfont iconIMweb_group"></i>
-          <span>创建群聊</span>
+          <span>{{$t('chuang_jian_qun_liao')}}</span>
         </el-dropdown-item>
         <el-dropdown-item command="a" class="drop-item">
           <i style="font-size:22px" class="iconfont iconIMweb_addfriends"></i>
-          <span>添加好友</span>
+          <span>{{$t('tian_jia_hao_you')}}</span>
         </el-dropdown-item>
         <el-dropdown-item command="c" class="drop-item">
           <i style="font-size:22px" class="iconfont iconIMweb_group"></i>
-          <span>群发消息</span>
+          <span>{{$t('qun_fa_xiao_xi')}}</span>
         </el-dropdown-item>
-        <el-dropdown-item command="d" class="drop-item">
-          <!-- TODO新建标签 -->
+        <!-- <el-dropdown-item command="d" class="drop-item">
           <i style="font-size:22px" class="iconfont iconIMweb_addfriends"></i>
-          <span>新建标签</span>
-        </el-dropdown-item>
+          <span>{{$t('xin_jian_biao_qian')}}</span>
+        </el-dropdown-item> -->
       </el-dropdown-menu>
     </el-dropdown>
 
     <el-dialog
-      title="添加好友"
+      :title="$t('tian_jia_hao_you')"
       :visible.sync="dialogVisible"
       width="500px"
     >
       <div class="add-modal">
         <el-input
           v-model="input"
-          placeholder="请输入内容"
+          :placeholder="$t('qing_shu_ru_nei_rong')"
           @input="handleSearch"
         ></el-input>
         <el-empty
           v-if="list.length == 0"
-          description="暂无搜索结果"
+          :description="$t('zan_wu_sou_suo_jie_guo')"
         ></el-empty>
         <div
           v-else
@@ -86,7 +85,7 @@
             <div
               class="user-item_add"
               @click="add(item)"
-            >添加为好友</div>
+            >{{$t('tian_jia_wei_hao_you')}}</div>
           </div>
         </div>
       </div>
@@ -94,27 +93,27 @@
         slot="footer"
         class="dialog-footer"
       >
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="dialogVisible = false">{{$t('qu_xiao')}}</el-button>
         <el-button
           type="primary"
           @click="dialogVisible = false"
-        >确 定</el-button>
+        >{{$t('que_ding')}}</el-button>
       </span>
     </el-dialog>
     <selectUser
       ref="selectUser"
-      title="发起群聊"
+      :title="$t('fa_qi_qun_liao')"
       tip=""
       @handleOk="handleOk"
     ></selectUser>
     <selectUserGroup
       ref="selectUserGroup"
-      title="群发消息"
+      :title="$t('qun_fa_xiao_xi')"
       tip=""
     ></selectUserGroup>
     <selectUserTag
       ref="selectUserTag"
-      title="添加标签"
+      :title="$t('tian_jia_biao_qian')"
       tip=""
     ></selectUserTag>
   </div>
@@ -214,16 +213,16 @@ export default {
       this.change()
     },
     add (item) {
-      this.$prompt('你需要发送验证申请,等对方通过', '朋友验证', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消'
+      this.$prompt(this.$t('ni_xu_yao_fa_song_yan_zheng_shen_qing_,_deng_dui_fang_tong_guo'), this.$t('peng_you_yan_zheng'), {
+        confirmButtonText: this.$t('que_ding'),
+        cancelButtonText: this.$t('qu_xiao')
       }).then(({ value }) => {
         friendAdd({
           user_id: item.id,
           is_type: 0,
           content: value
         }).then(res => {
-          this.$message.success('申请成功')
+          this.$message.success(this.$t('shen_qing_cheng_gong'))
           this.dialogVisible = false
         })
       })

@@ -5,11 +5,11 @@
         <div class="select-content-header">
           <el-input
             v-model="search"
-            placeholder="搜索"
+            :placeholder="$t('sou_suo')"
             size="mini"
             prefix-icon="el-icon-search"
           ></el-input>
-          <el-button type="primary" style="margin:0 10px" @click="selectAll" size="mini">全选/反选</el-button>
+          <el-button type="primary" style="margin:0 10px" @click="selectAll" size="mini">{{$t('quan_xuan')}}/{{$t('fan_xuan')}}</el-button>
         </div>
         <div class="select-content-wrapper">
           <div
@@ -151,7 +151,7 @@ export default {
     },
     handleCheck (data) {
       if (this.default.includes(data.list_id)) {
-        this.$message.warning('该聊天已被邀请');
+        this.$message.warning(this.$t('gai_liao_tian_yi_bei_yao_qing'));
         return;
       }
       if (
@@ -160,7 +160,7 @@ export default {
           (item) => !(item.list_id != data.list_id && item.isSelect)
         )
       ) {
-        this.$message.warning('仅能分享单个用户');
+        this.$message.warning(this.$t('jin_neng_fen_xiang_dan_ge_yong_hu'));
         return;
       }
       this.list.forEach((item, index) => {
@@ -172,7 +172,7 @@ export default {
     },
     getList () {
       getChatList().then((res) => {
-        console.log("群发消息列表", res);
+        console.log(this.$t('qun_fa_xiao_xi_lie_biao'), res);
         const data = res.data;
         let result = [];
         Object.keys(data).forEach((key) => {
@@ -213,7 +213,7 @@ export default {
     },
     handleSend () {
       if (this.selectedList.length == 0) {
-        this.$message.warning('请选择人员');
+        this.$message.warning(this.$t('qing_xuan_ze_ren_yuan'));
         return;
       }
       this.$emit('handleOk', this.selectedList);

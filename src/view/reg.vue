@@ -8,24 +8,24 @@
       <el-input
         v-model="form.username"
         class="page-form_input"
-        placeholder="请输入用户名，不小于5位"
+        :placeholder="$t('qing_shu_ru_yong_hu_ming_bu_xiao_yu_5_wei')"
       ></el-input>
       <el-input
         v-model="form.password"
         class="page-form_input"
         type="password"
-        placeholder="请输入密码，不小于5位"
+        :placeholder="$t('qing_shu_ru_mi_ma_bu_xiao_yu_5_wei')"
       ></el-input>
       <div
         :class="`page-form_btn ${checkIn ? '' : 'disabled'}`"
         :loading="loading"
         @click="handleLogin"
-      >立即注册</div>
+      >{{$t('li_ji_zhu_ce')}}</div>
     </div>
     <div
       class="page-footer"
       @click="goLogin"
-    >已有账号，点此去登录</div>
+    >{{$t('yi_you_zhang_hao_dian_ci_qu_deng_lu')}}</div>
   </div>
 </template>
 
@@ -51,15 +51,15 @@ export default {
   methods: {
     handleLogin () {
       if (!this.checkIn) {
-        this.$message.error('请输入正确格式的账号密码')
+        this.$message.error(this.$t('qing_shu_ru_zheng_que_ge_shi_de_zhang_hao_mi_ma'))
         return false
       }
       if (!(/^\w{1,20}$/.test(this.form.username))) {
-        this.$message.error('密聊号只能包括下划线、数字、字母,并且不能超过20个')
+        this.$message.error(this.$t('mi_liao_hao_zhi_neng_bao_kuo_xia_hua_xian_shu_zi_zi_mu_,_bing_qie_bu_neng_chao_guo_20_ge'))
         return;
       }
       if (!(/^\w{1,20}$/.test(this.form.password))) {
-        this.$message.error('密码只能包括下划线、数字、字母,长度6-20位')
+        this.$message.error(this.$t('mi_ma_zhi_neng_bao_kuo_xia_hua_xian_shu_zi_zi_mu_,_chang_du_6-20_wei'))
         return;
       }
       this.loading = true

@@ -12,7 +12,7 @@
         height="36"
         :src="img"
       >
-      <div class="remark">好友请求</div>
+      <div class="remark">{{$t('hao_you_qing_qiu')}}</div>
       <p
         v-if="user.new_friend_tips_num > 0"
         class="newFriend"
@@ -20,7 +20,7 @@
     </div>
     <div class="line-num">
       <span class="line-num-item"></span>
-      <span>{{searchedFriendlist.length }}个联系人</span>
+      <span>{{searchedFriendlist.length }}{{$t('ge_lian_xi_ren')}}</span>
       <span class="line-num-item"></span>
     </div>
     <ul>
@@ -70,7 +70,7 @@
       </li>
     </ul>
     <div v-show="menuVisible" id="contextmenu" class="menu">
-      <div class="contextmenu__item" @click="handleDel">删除好友</div>
+      <div class="contextmenu__item" @click="handleDel">{{$t('shan_chu_hao_you')}}</div>
     </div>
   </div>
 </template>

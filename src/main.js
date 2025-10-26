@@ -3,6 +3,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import elementUI from 'element-ui'
+import i18n from './i18n'
 
 import jsonp from 'jsonp';
 
@@ -22,5 +23,6 @@ new Vue({
   router,
   store,
   el: '#app',
+  i18n,
   render: h => h(App)
 })

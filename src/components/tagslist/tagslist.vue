@@ -3,7 +3,7 @@
   <div class="friendlist">
     <div class="line-num">
       <span class="line-num-item"></span>
-      <span>{{searchedTagslist.length }}个标签</span>
+      <span>{{searchedTagslist.length }}{{$t('ge_biao_qian')}}</span>
       <span class="line-num-item"></span>
     </div>
    
@@ -21,12 +21,12 @@
           @click="handleSelectTag(item)"
         >
           <div class="name">{{item.name}}</div>
-          <div class="remark">({{ item.num }})人</div>
+          <div class="remark">({{ item.num }}){{$t('ren')}}</div>
         </div>
       </li>
     </ul>
     <div v-show="menuVisible" id="contextmenu" class="menu">
-      <div class="contextmenu__item" @click="handleDelTag">删除标签</div>
+      <div class="contextmenu__item" @click="handleDelTag">{{$t('shan_chu_biao_qian')}}</div>
     </div>
   </div>
 </template>
@@ -101,7 +101,7 @@ export default {
       delTags({
         id:this.currentRow.id,
       }).then(res => {
-        this.$message.success("删除成功");
+        this.$message.success(this.$t('shan_chu_cheng_gong'));
         this.fetchTagsList();
       })
     },

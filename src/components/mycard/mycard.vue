@@ -33,12 +33,12 @@
                 />
                 <i v-else class="el-icon-plus avatar-uploader-icon"></i>
               </el-upload>
-              <span>修改头像</span>
+              <span>{{$t('xiu_gai_tou_xiang')}}</span>
             </div>
           </div>
           <div v-if="user.user_info" class="detInfo">
             <div class="list_id">
-              <span>微信号</span><span>{{ user.user_info.username }}</span>
+              <span>{{$t('wei_xin_hao')}}</span><span>{{ user.user_info.username }}</span>
             </div>
           </div> 
           
@@ -63,16 +63,16 @@
                   <span>{{ user.uid }}</span>
                 </div>
                 <div class="user-info-item">
-                  <span class="gray">签名</span>
+                  <span class="gray">{{$t('qian_ming')}}</span>
                   <span>{{ user.user_info.doodling }}</span>
                 </div>
                 <div class="user-info-item">
-                  <span class="gray">地区</span>
+                  <span class="gray">{{$t('di_qu')}}</span>
                   <span>{{ info.address }}</span>
                 </div>
                 <div class="change-btns">
-                  <button class="primarybtn" @click="show_userinfo = true, show_my_card = false">修改信息</button>
-                  <button class="primarybtn default" @click="show_my_card = false">发消息</button>
+                  <button class="primarybtn" @click="show_userinfo = true, show_my_card = false">{{$t('xiu_gai_xin_xi')}}</button>
+                  <button class="primarybtn default" @click="show_my_card = false">{{$t('fa_xiao_xi')}}</button>
                 </div>
               </div>
             </div>
@@ -90,25 +90,26 @@
       <router-link to="/chat" class="custom-link">
         <img v-if="currentPath == '/chat'" src="@/assets/navbar/chatin.png" alt="">
         <img v-else src="@/assets/navbar/chat.png" alt="">
-        <span :style="{ color: currentPath == '/chat' ? '#3D98FF' : '#999' }">聊天</span>
+        <span :style="{ color: currentPath == '/chat' ? '#3D98FF' : '#999' }">{{$t('liao_tian')}}</span>
       </router-link>
       <router-link to="/friend" class="custom-link">
         <img v-if="currentPath == '/friend'" src="@/assets/navbar/friendsin.png" alt="">
         <img v-else src="@/assets/navbar/friends.png" alt="">
-        <span :style="{ color: currentPath == '/friend' ? '#3D98FF' : '#999' }">好友</span>
+        <span :style="{ color: currentPath == '/friend' ? '#3D98FF' : '#999' }">{{$t('hao_you')}}</span>
       </router-link>
       <router-link to="/groups?type=1" class="custom-link">
         <!-- TODO群聊功能 -->
         <img v-if="currentPath == '/groups?type=1'" src="@/assets/navbar/groupsin.png" alt="">
         <img v-else src="@/assets/navbar/groups.png" alt="">
-        <span :style="{ color: currentPath == '/groups?type=1' ? '#3D98FF' : '#999' }">群聊</span>
+        <span :style="{ color: currentPath == '/groups?type=1' ? '#3D98FF' : '#999' }">{{$t('qun_liao')}}</span>
       </router-link>
-      <router-link to="/tags" class="custom-link">
-        <!-- TODO标签功能 -->
+      <!-- <router-link to="/tags" class="custom-link">
+
         <img v-if="currentPath == '/tags'" src="@/assets/navbar/tagsin.png" alt="">
         <img v-else src="@/assets/navbar/tags.png" alt="">
-        <span :style="{ color: currentPath == '/tags' ? '#3D98FF' : '#999' }">标签</span>
-      </router-link>
+        <span :style="{ color: currentPath == '/tags' ? '#3D98FF' : '#999' }">{{$t('biao_qian')}}</span>
+      </router-link> -->
+      <LanguageSwitcher />
     </div>
     <footer>
       <el-dropdown placement="top" @command="handleCommand">
@@ -117,65 +118,65 @@
           <!-- <el-dropdown-item command="bind" class="drop-item">
             <i style="font-size:20px" class="el-icon-mobile
 "></i>
-            <span>绑定手机</span>
+            <span>{{$t('bang_ding_shou_ji')}}</span>
           </el-dropdown-item> -->
           <el-dropdown-item command="reset" class="drop-item">
             <i style="font-size:22px" class="iconfont iconPassword"></i>
-            <span>修改密码</span>
+            <span>{{$t('xiu_gai_mi_ma')}}</span>
           </el-dropdown-item>
           <el-dropdown-item command="logout" class="drop-item">
             <i style="font-size:22px" class="iconfont iconttubiao_signout"></i>
-            <span>退出登录</span>
+            <span>{{$t('tui_chu_deng_lu')}}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </footer>
-    <el-dialog title="密码修改" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
+    <el-dialog :title="$t('mi_ma_xiu_gai')" :visible.sync="dialogVisible" width="500px" :close-on-click-modal="false">
       <el-form :model="formData">
-        <el-form-item label="输入原密码" label-width="60">
+        <el-form-item :label="$t('shu_ru_yuan_mi_ma')" label-width="60">
           <el-input v-model="formData.pass1" autocomplete="off" show-password></el-input>
         </el-form-item>
-        <el-form-item label="输入新密码" label-width="60">
+        <el-form-item :label="$t('shu_ru_xin_mi_ma')" label-width="60">
           <el-input v-model="formData.pass2" autocomplete="off" show-password></el-input>
         </el-form-item>
-        <el-form-item label="确认新密码" label-width="60">
+        <el-form-item :label="$t('que_ren_xin_mi_ma')" label-width="60">
           <el-input v-model="formData.pass3" autocomplete="off" show-password></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleReset">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{$t('qu_xiao')}}</el-button>
+        <el-button type="primary" @click="handleReset">{{$t('que_ding')}}</el-button>
       </span>
     </el-dialog>
     <!-- TODO修改用户信息 -->
     <el-dialog custom-class="custom-dialog" width="400px" :visible.sync="show_userinfo">
       <div slot="title" class="dialog-title">
-        修改个人信息
+        {{$t('xiu_gai_ge_ren_xin_xi')}}
       </div>
       <div class="dialog-body">
         <div class="dialog-item">
-          <span class="gray">账号</span>
+          <span class="gray">{{$t('zhang_hao')}}</span>
           <span style="padding-left:15px;">{{ user.user_info.username }}</span>
         </div>
         <div class="dialog-item">
-          <span class="gray">昵称</span>
-          <el-input class="custom-input" type="text" placeholder="请输入昵称" v-model="user.user_info.nickname" maxlength="30"
+          <span class="gray">{{$t('ni_cheng')}}</span>
+          <el-input class="custom-input" type="text" :placeholder="$t('qing_shu_ru_ni_cheng')" v-model="user.user_info.nickname" maxlength="30"
             show-word-limit />
         </div>
         <div class="dialog-item">
-          <span class="gray align-start">签名</span>
-          <el-input class="custom-input" type="textarea" placeholder="请输入内容" v-model="user.user_info.doodling"
+          <span class="gray align-start">{{$t('qian_ming')}}</span>
+          <el-input class="custom-input" type="textarea" :placeholder="$t('qing_shu_ru_nei_rong')" v-model="user.user_info.doodling"
             maxlength="30" show-word-limit />
         </div>
         <div class="dialog-item">
-          <span class="gray align-start">性别</span>
-          <el-select class="custom-input" v-model="user.user_info.sex" placeholder="请选择">
+          <span class="gray align-start">{{$t('xing_bie')}}</span>
+          <el-select class="custom-input" v-model="user.user_info.sex" :placeholder="$t('qing_xuan_ze')">
             <el-option v-for="item in sex_options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
         </div>
 		<div class="dialog-item">
-		  <span class="gray align-start">开启好友消息验证</span>
+		  <span class="gray align-start">{{$t('kai_qi_hao_you_xiao_xi_yan_zheng')}}</span>
 		  <el-switch
 		    v-model="validation"
 			@change ="uservalidation()" 
@@ -184,15 +185,15 @@
 		  </el-switch>
 		</div>
         <div class="dialog-item">
-          <span class="gray">地区</span>
+          <span class="gray">{{$t('di_qu')}}</span>
           <span style="padding-left:15px;">{{ info.address }}</span>
           <span class="gray" style="padding-left:15px;">(注册IP归属地，暂不支持修改)</span>
         </div>
       </div>
       <div slot="footer" class="change-btns dialog-footer">
-        <button class="primarybtn default" @click="show_userinfo = false">取 消</button>
+        <button class="primarybtn default" @click="show_userinfo = false">{{$t('qu_xiao')}}</button>
         <!-- TODO修改用户信息接口 -->
-        <button class="primarybtn" type="primary" @click="show_userinfo = false">保存</button>
+        <button class="primarybtn" type="primary" @click="show_userinfo = false">{{$t('bao_cun')}}</button>
       </div>
     </el-dialog>
   </div>
@@ -201,8 +202,12 @@
 <script>
 import { mapState } from 'vuex';
 import { clearStore } from '@/utils/store';
+import LanguageSwitcher from '@/components/LanguageSwitcher.vue'
 import { resetPassword,setInfo,fetchUserInfo, uploadPhoto, updatePhoto, getUserStore } from '@/api';
 export default {
+  components: {
+    LanguageSwitcher
+  },
   data() {
     return {
 		validation:false,
@@ -219,15 +224,15 @@ export default {
       show_userinfo: false,//显示修改用户信息
       sex_options: [
         {
-          label: '男',
+          label: this.$t('nan'),
           value: 1,
         },
         {
-          label: '女',
+          label: this.$t('nv'),
           value: 2
         },
         {
-          label: '保密',
+          label: this.$t('bao_mi'),
           value: 0
         }
       ],
@@ -270,15 +275,15 @@ export default {
 			  content:this.validation
 		  }).then(res => {
 			  if(res.err == 0){
-				   this.$message.success('设置成功');
+				   this.$message.success(this.$t('she_zhi_cheng_gong'));
 			  }else{
-				   this.$message.error('设置失败');
+				   this.$message.error(this.$t('she_zhi_shi_bai'));
 			  }
 		  });
 	  },
     getInfo() {
       getUserStore().then(res => {
-        console.log("所有信息11", res);
+        console.log(this.$t('suo_you_xin_xi_11'), res);
         this.info = res.data.info.user_info;
 		 this.getAddress(this.info.ip);
 		 
@@ -342,23 +347,23 @@ export default {
     },
     handleReset() {
       if (!this.formData.pass1 || this.formData.pass1.length < 6) {
-        this.$message.error('请输入原密码,不能小于6位');
+        this.$message.error(this.$t('qing_shu_ru_yuan_mi_ma_,_bu_neng_xiao_yu_6_wei'));
         return;
       }
       if (!this.formData.pass2 || this.formData.pass2.length < 6) {
-        this.$message.error('请输入新密码,不能小于6位');
+        this.$message.error(this.$t('qing_shu_ru_xin_mi_ma_,_bu_neng_xiao_yu_6_wei'));
         return;
       }
       if (!this.formData.pass3 || this.formData.pass3.length < 6) {
-        this.$message.error('请确认新密码,不能小于6位');
+        this.$message.error(this.$t('qing_que_ren_xin_mi_ma_,_bu_neng_xiao_yu_6_wei'));
         return;
       }
       if (this.formData.pass2 !== this.formData.pass3) {
-        this.$message.error('两次新密码不一致');
+        this.$message.error(this.$t('liang_ci_xin_mi_ma_bu_yi_zhi'));
         return;
       }
       resetPassword(this.formData).then((res) => {
-        this.$message.success('已修改,请重新登陆');
+        this.$message.success(this.$t('yi_xiu_gai_,_qing_zhong_xin_deng_lu'));
         setTimeout(() => {
           this.handleCommand();
         }, 1000);

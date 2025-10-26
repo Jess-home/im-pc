@@ -1,6 +1,6 @@
 <template>
   <div class="col-page">
-    <div class="col-header">全部收藏</div>
+    <div class="col-header">{{$t('quan_bu_shou_cang')}}</div>
     <div class="col-list">
       <div
         v-for="(item, index) in list"
@@ -9,12 +9,12 @@
       >
         <i
           class="el-icon-delete"
-          title="点击删除收藏"
+          :title="$t('dian_ji_shan_chu_shou_cang')"
           @click.stop="handleDelete(item)"
         ></i>
         <div
           class="col-item_content"
-          title="点击转发收藏"
+          :title="$t('dian_ji_zhuan_fa_shou_cang')"
           @click.stop="handleShare(item)"
         >
           <span v-if="item.type == 0">{{ item.content.text }}</span>
@@ -34,8 +34,8 @@
     </div>
     <selectUser
       ref="selectUser"
-      title="消息转发"
-      tip="分别转发给"
+      :title="$t('xiao_xi_zhuan_fa')"
+      :tip="$t('fen_bie_zhuan_fa_gei')"
       @handleOk="handleOk"
     ></selectUser>
   </div>
@@ -74,7 +74,7 @@ export default {
       deleteStore({
         id: item.id
       }).then(res => {
-        this.$message.success('删除成功')
+        this.$message.success(this.$t('shan_chu_cheng_gong'))
         this.getList()
       })
     },
@@ -92,7 +92,7 @@ export default {
         content_type: this.currentRow.msgItem_type,
         content: JSON.stringify(this.currentRow.content)
       }).then(res => {
-        this.$message.success('转发成功')
+        this.$message.success(this.$t('zhuan_fa_cheng_gong'))
       })
     }
   }

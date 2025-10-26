@@ -1,6 +1,6 @@
 <template>
   <div class="col-page">
-    <div class="col-header">新的朋友</div>
+    <div class="col-header">{{$t('xin_de_peng_you')}}</div>
     <div class="col-list">
       <div
         v-for="(item, index) in list"
@@ -21,11 +21,11 @@
           v-if="item.text != '已添加'"
           class="col-item_add"
           @click="add(item)"
-        >同意</div>
+        >{{$t('tong_yi')}}</div>
         <div
           v-else
           class="col-item_added"
-        >已添加</div>
+        >{{$t('yi_tian_jia')}}</div>
       </div>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
       friendAddAction({
         apply_id: item.id
       }).then(res => {
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('tian_jia_cheng_gong'))
         this.getList()
         this.fetchFriendList()
       })

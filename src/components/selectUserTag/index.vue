@@ -3,15 +3,15 @@
     <div class="select-content">
       <div class="select-content-left">
         <div class="tag-box">
-          <div>标签名称：</div>
+          <div>{{$t('biao_qian_ming_cheng')}}</div>
           <div class="tag-input">
-            <el-input size="mini" v-model="tag_name" placeholder="如家人、朋友等"></el-input>
+            <el-input size="mini" v-model="tag_name" :placeholder="$t('ru_jia_ren_peng_you_deng')"></el-input>
           </div>
         </div>
         <div class="select-content-header">
           <el-input
             v-model="search"
-            placeholder="搜索"
+            :placeholder="$t('sou_suo')"
             size="mini"
             prefix-icon="el-icon-search"
           ></el-input>
@@ -66,8 +66,8 @@
       </div>
     </div>
     <span slot="footer" class="dialog-footer">
-      <el-button size="small" @click="dialogVisible = false">取 消</el-button>
-      <el-button size="small" type="primary" @click="handleSend">确 定</el-button>
+      <el-button size="small" @click="dialogVisible = false">{{$t('qu_xiao')}}</el-button>
+      <el-button size="small" type="primary" @click="handleSend">{{$t('que_ding')}}</el-button>
     </span>
   </el-dialog>
 </template>
@@ -118,7 +118,7 @@ export default {
     ]),
     handleCheck (data) {
       if (this.default.includes(data.user_id)) {
-        this.$message.warning('该用户已被邀请');
+        this.$message.warning(this.$t('gai_yong_hu_yi_bei_yao_qing'));
         return;
       }
       if (
@@ -127,7 +127,7 @@ export default {
           (item) => !(item.user_id != data.user_id && item.isSelect)
         )
       ) {
-        this.$message.warning('仅能分享单个用户');
+        this.$message.warning(this.$t('jin_neng_fen_xiang_dan_ge_yong_hu'));
         return;
       }
       this.list.forEach((item, index) => {
@@ -178,11 +178,11 @@ export default {
     },
     handleSend () {
       if (this.selectedList.length == 0) {
-        this.$message.warning('请选择人员');
+        this.$message.warning(this.$t('qing_xuan_ze_ren_yuan'));
         return;
       }
       if (!this.tag_name) {
-        this.$message.warning('请输入标签');
+        this.$message.warning(this.$t('qing_shu_ru_biao_qian'));
         return;
       }
       let user_ids = [];
@@ -197,12 +197,12 @@ export default {
     },
     // 添加标签
     handleAddTag(data) {
-      console.log("data添加", data);
+      console.log(this.$t('data_tian_jia'), data);
       addTags({
         name:data.name,
         user_ids:data.list,
       }).then(res => {
-        console.log("res添加标签成功", res);
+        console.log(this.$t('res_tian_jia_biao_qian_cheng_gong'), res);
         if (res.code == 0) {
           this.$message.success(res.msg);
         } else {

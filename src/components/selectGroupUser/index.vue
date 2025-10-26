@@ -16,7 +16,7 @@
       
     </el-checkbox-group>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="saveUser">保存</el-button>
+      <el-button type="primary" @click="saveUser">{{$t('bao_cun')}}</el-button>
     </span>
   </el-dialog>
 </template>

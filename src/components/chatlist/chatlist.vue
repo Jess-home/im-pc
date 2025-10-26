@@ -4,7 +4,7 @@
     <ul>
       <li class="line-box" v-if="type == 1">
         <span class="line"></span>
-        <span class="group-num">{{ filterSearchedChatlist.length }}个群聊</span>
+        <span class="group-num">{{ filterSearchedChatlist.length }}{{$t('ge_qun_liao')}}</span>
         <span class="line"></span>
       </li>
       <li v-for="(item, index) in  filterSearchedChatlist " :key="index" class="sessionlist"
@@ -51,18 +51,18 @@
         </div>
         <div class="zhiding" v-if="item.top"></div>
         <div class="time">
-          <span>{{ item.messages[item.messages.length - 1].date | time }}</span>
+          <span>{{ formatTime(item.messages[item.messages.length - 1].date)}}</span>
         </div>
       </li>
     </ul>
     <div v-show="menuVisible" id="contextmenu" class="menu">
       <div class="contextmenu__item" @click="handleSetting(1, !currentRow.top)">
-        {{ currentRow.top ? "取消" : "" }}置顶
+        {{ currentRow.top ? "取消" : "" }}{{$t('zhi_ding')}}
       </div>
       <div class="contextmenu__item" @click="handleSetting(2, !currentRow.is_disturb)">
         {{ currentRow.is_disturb ? "打开新消息提醒" : "消息免打扰" }}
       </div>
-      <div class="contextmenu__item" @click="handleSetting(3)">删除聊天</div>
+      <div class="contextmenu__item" @click="handleSetting(3)">{{$t('shan_chu_liao_tian')}}</div>
     </div>
   </div>
 </template>
@@ -78,9 +78,57 @@ import {
 } from '@/api';
 const { photoUrl } = window.__gconf;
 export default {
-  filters: {
-    // 将日期过滤为 hour:minutes
-    time(timestamp) {
+  // ❌ 删除这里的 filters,因为 filters 中无法使用 this.$t
+  // 改用 methods 来实现
+  
+  props: {
+    type: 0
+  },
+  data() {
+    return {
+      menuVisible: false,
+      currentRow: {},
+      photoUrl: photoUrl,
+      adddd: ""
+    };
+  },
+  computed: {
+    ...mapState(['selectId', 'searchText', 'chatlist']),
+    ...mapGetters(['searchedChatlist']),
+    filterSearchedChatlist() {
+      let arr = [];
+     
+      if (this.type == 0) {
+        arr = this.searchedChatlist;
+        console.log(arr, 'arr')
+      }
+      if (this.type == 1) {
+        this.searchedChatlist.map(item => {
+          if (item.type == 1) {
+            arr.push(item)
+          }
+        })
+      }
+      if (arr.length && !this.selectId) {
+        this.selectSession(arr[0].list_id)
+      }
+      this.adddd = arr
+      return arr;
+    }
+  },
+  watch: {
+    searchedChatlist(searchedChatlist) {
+    }
+  },
+  created() {
+    this.fetchCharList(this.selectId || '');
+  },
+  methods: {
+    ...mapActions(['selectSession', 'selectSession1', 'fetchCharList']),
+    ...mapMutations(['clearSelectId']),
+    
+    // ⭐ 新增: 将 filter 改为 method
+    formatTime(timestamp) {
       timestamp = new Date(timestamp).valueOf() / 1000;
       let curTimestamp = parseInt(new Date().getTime() / 1000), //当前时间戳
         timestampDiff = curTimestamp - timestamp, // 参数时间戳与当前时间戳相差秒数
@@ -92,19 +140,20 @@ export default {
         H = tmDate.getHours(),
         i = tmDate.getMinutes(),
         s = tmDate.getSeconds();
+      
       if (timestampDiff < 60) {
         // 一分钟以内
-        return '刚刚';
+        return this.$t('gang_gang');
       } else if (timestampDiff < 3600) {
         // 一小时前之内
-        return Math.floor(timestampDiff / 60) + '分钟前';
+        return Math.floor(timestampDiff / 60) + this.$t('fen_zhong_qian');
       } else if (
         curDate.getFullYear() == Y &&
         curDate.getMonth() + 1 == m &&
         curDate.getDate() == d
       ) {
         return (
-          '今天 ' +
+          this.$t('jin_tian') +
           ((String(H).length == 1 ? '0' : '') + H) +
           ':' +
           ((String(i).length == 1 ? '0' : '') + i)
@@ -117,7 +166,7 @@ export default {
           newDate.getDate() == d
         ) {
           return (
-            '昨天 ' +
+            this.$t('zuo_tian') +
             ((String(H).length == 1 ? '0' : '') + H) +
             ':' +
             ((String(i).length == 1 ? '0' : '') + i)
@@ -136,11 +185,11 @@ export default {
         } else {
           return (
             Y +
-            '年' +
+            this.$t('nian') +
             ((String(m).length == 1 ? '0' : '') + m) +
-            '月' +
+            this.$t('yue') +
             ((String(d).length == 1 ? '0' : '') + d) +
-            '日 ' +
+            this.$t('ri') +
             ((String(H).length == 1 ? '0' : '') + H) +
             ':' +
             ((String(i).length == 1 ? '0' : '') + i)
@@ -148,116 +197,51 @@ export default {
         }
       }
     },
-
-  },
-  props: {
-    type: 0
-  },
-  data() {
-    return {
-      menuVisible: false,
-      currentRow: {},
-      photoUrl: photoUrl,
-	  adddd:""
-    };
-  },
-  computed: {
-    ...mapState(['selectId', 'searchText', 'chatlist']),
-    ...mapGetters(['searchedChatlist']),
-    filterSearchedChatlist() {
-      let arr = [];
-	 
-      if (this.type == 0) {
-        arr = this.searchedChatlist;
-        console.log(arr, 'arr')
-      }
-      if (this.type == 1) {
-        this.searchedChatlist.map(item => {
-          if (item.type == 1) {
-            arr.push(item)
+    
+    aaaaa() {
+      var _this = this
+      
+      setInterval(function() {
+        if (_this.adddd != undefined) {
+          for (var i = 0; i < _this.adddd.length; i++) {
+            if (_this.adddd[i]['type'] == 0) {
+              console.log(1111)
+              _this.selectSession1(_this.adddd[i], _this.adddd[i]['list_id'])
+            }
           }
-        })
-		
-		
-      }
-      if (arr.length && !this.selectId) {
-        this.selectSession(arr[0].list_id)
-      }
-	  this.adddd= arr
-      return arr;
-    }
-  },
-  watch: {
-	  
-    searchedChatlist(searchedChatlist) {
-		
-	 
-    }
-  },
-  created() {
-	  
-	
-    this.fetchCharList(this.selectId || '');
-	
-	// this.aaaaa()
-	
-	
-  },
-  methods: {
-    ...mapActions(['selectSession','selectSession1', 'fetchCharList']),
-    ...mapMutations(['clearSelectId']),
-	
-	aaaaa(){
-		var _this = this
-		
-		
-		setInterval(function() {
-			
-			
-			if(_this.adddd != undefined){ 
-				
-				for (var i = 0; i < _this.adddd.length; i++) {
-					if(_this.adddd[i]['type'] == 0){
-						console.log(1111)
-						_this.selectSession1(_this.adddd[i],_this.adddd[i]['list_id'])
-					}
-				    
-				 }
-			}
-			
-		}, 1000);
-		
-	},
-	guolvehtml(content){
-		var regex = /(<([^>]+)>)/ig;
-		return content.replace(regex, "");
-	},
+        }
+      }, 1000);
+    },
+    
+    guolvehtml(content) {
+      var regex = /(<([^>]+)>)/ig;
+      return content.replace(regex, "");
+    },
+    
     filterContent(content) {
-      // console.log("content",content);
       if (typeof content == 'string') {
-		 
         return content;
       } else if (typeof content == 'object') {
         if (content.url && this.isVideo(content.url)) {
-          return '[视频]';
+          return this.$t('[_shi_pin_]');
         } else if (content.url && this.isFile(content.url)) {
-          return '[文件]';
+          return this.$t('[_wen_jian_]');
         } else if (content.url && this.isImageFile(content.url)) {
-          return '[图片]';
+          return this.$t('[_tu_pian_]');
         } else if (content.url || this.isImage(content.text)) {
-          return '[图片]';
-        }
-        else if (
+          return this.$t('[_tu_pian_]');
+        } else if (
           content.text &&
           typeof content.text == 'string' &&
-          content.text.includes('名片')
+          content.text.includes(this.$t('ming_pian'))
         ) {
-          return '[名片]';
+          return this.$t('[_ming_pian_]');
         } else {
           return content.text;
         }
       }
     },
+    
     // 判断视频
     isVideo(url) {
       if (url && url.indexOf('mp4') > -1) {
@@ -266,6 +250,7 @@ export default {
         return false
       }
     },
+    
     // 图片文件
     isImageFile(url) {
       if (url && (url.indexOf('jpg') > -1 || url.indexOf('png') > -1)) {
@@ -274,34 +259,35 @@ export default {
         return false
       }
     },
+    
     // 判断文件
     isFile(url) {
-      if (url && (url.indexOf('pdf') > -1 || url.indexOf('ppt') > -1 || url.indexOf('zip') > -1 || url.indexOf('zip') > -1 || url.indexOf('apk') > -1 || url.indexOf('txt') > -1
-      )) {
+      if (url && (url.indexOf('pdf') > -1 || url.indexOf('ppt') > -1 || url.indexOf('zip') > -1 || url.indexOf('zip') > -1 || url.indexOf('apk') > -1 || url.indexOf('txt') > -1)) {
         return true
       } else {
         return false
       }
     },
+    
     // 判断图片
     isImage(con) {
-      // 如果是图片，则转换成图片
-      let reg =
-        /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i;
+      // 如果是图片,则转换成图片
+      let reg = /^https?:\/\/(.+\/)+.+(\.(gif|png|jpg|jpeg|webp|svg|psd|bmp|tif))$/i;
       if (reg.test(con) || con.indexOf('<img') > -1) {
         return true;
       } else {
         return false;
       }
     },
+    
     handleSet(event, item) {
       console.log(item);
       getChatDetails({
         list_id: item.list_id
       }).then((res) => {
-        this.menuVisible = false; // 先把模态框关死，目的是 第二次或者第n次右键鼠标的时候 它默认的是true
-        this.menuVisible = true; // 显示模态窗口，跳出自定义菜单栏
-        event.preventDefault(); //关闭浏览器右键默认事件
+        this.menuVisible = false;
+        this.menuVisible = true;
+        event.preventDefault();
         this.currentRow = {
           ...item,
           ...res.data
@@ -310,24 +296,26 @@ export default {
         this.styleMenu(menu, event);
       });
     },
+    
     foo() {
-      // 取消鼠标监听事件 菜单栏
       this.menuVisible = false;
-      document.removeEventListener('click', this.foo); // 关掉监听，
+      document.removeEventListener('click', this.foo);
     },
+    
     styleMenu(menu, event) {
       if (event.clientX > 1800) {
         menu.style.left = event.clientX - 100 + 'px';
       } else {
         menu.style.left = event.clientX + 1 + 'px';
       }
-      document.addEventListener('click', this.foo); // 给整个document新增监听鼠标事件，点击任何位置执行foo方法
+      document.addEventListener('click', this.foo);
       if (event.clientY > 700) {
         menu.style.top = event.clientY - 30 + 'px';
       } else {
         menu.style.top = event.clientY - 10 + 'px';
       }
     },
+    
     handleSetting(type, value) {
       const data = {
         list_id: this.currentRow.list_id,

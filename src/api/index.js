@@ -279,6 +279,16 @@ export const withdraw = data => {
   })
 }
 
+// 点赞
+export const dianzan = data => {
+  return request({
+    url: '/message/liked',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
+
 // 收藏列表
 export const getUserStore = data => {
   return request({
@@ -350,6 +360,15 @@ export const textMsgs = data => {
   })
 }
 
+// 获取已读列表
+export const groupState = data => {
+  return request({
+    url: '/action/groupState',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
 // 加好友
 export const friendAdd = data => {
   return request({

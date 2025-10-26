@@ -5,13 +5,13 @@
                 <div class="tag" @click="editUserTag">
                     <i class="iconfont iconttubiao_addpeople"></i>
                 </div>
-                <span class="f12 mt10">添加</span>
+                <span class="f12 mt10">{{$t('tian_jia')}}</span>
             </div>
             <div class="tag-item">
                 <div class="tag" @click="editUserTag">
                     <i class="iconfont iconttubiao_Less"></i>
                 </div>
-                <span class="f12 mt10">删除</span>
+                <span class="f12 mt10">{{$t('shan_chu')}}</span>
             </div>
             <div class="tag-item" v-for="(item,index) in userList" :key="index">
                 <div class="tag">
@@ -21,14 +21,14 @@
             </div>
         </div>
         <div class="label-box" v-if="getSelectTag.name">
-            <div class="label-name">标签名称：</div>
+            <div class="label-name">{{$t('biao_qian_ming_cheng')}}</div>
             <div class="label-box">
                 <span class="name">{{getSelectTag.name}}</span>
                 <i class="iconfont iconttubiao_bianji edit" @click="openTag"></i>
             </div>
         </div>
         <el-dialog
-            title="标签名称"
+            :title="$t('biao_qian_ming_cheng')"
             :visible.sync="dialogVisible"
             top="30vh"
             width="30%">
@@ -36,8 +36,8 @@
                 <el-input show-word-limit type="text" showli size="mini" v-model="label_name" maxlength="30"/>
             </div>
             <span slot="footer" class="dialog-footer">
-                <el-button size="mini"  @click="dialogVisible = false">取 消</el-button>
-                <el-button size="mini" type="primary" @click="handleEditTag">确 定</el-button>
+                <el-button size="mini"  @click="dialogVisible = false">{{$t('qu_xiao')}}</el-button>
+                <el-button size="mini" type="primary" @click="handleEditTag">{{$t('que_ding')}}</el-button>
             </span>
         </el-dialog>
         <editUserTag

@@ -1,41 +1,41 @@
 <template>
   <el-dialog
     class="group_manage"
-    title="群管理"
+    :title="$t('qun_guan_li')"
     :visible.sync="dialogVisible"
     width="400px"
   >
     <!-- 群昵称 -->
     <el-dialog
       width="400px"
-      title="群昵称"
+      :title="$t('qun_ni_cheng')"
       :visible.sync="showChangeGroupName"
       append-to-body
     >
-      <el-input v-model="group.name" placeholder="请输入群昵称"></el-input>
+      <el-input v-model="group.name" :placeholder="$t('qing_shu_ru_qun_ni_cheng')"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveGroupName">保存</el-button>
+        <el-button type="primary" @click="saveGroupName">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <!-- 我在本群的昵称 -->
     <el-dialog
       width="400px"
-      title="我在本群的昵称"
+      :title="$t('wo_zai_ben_qun_de_ni_cheng')"
       :visible.sync="showChangeNickName"
       append-to-body
     >
       <el-input
         v-model="info.my_nickname"
-        placeholder="请输入你在本群的昵称"
+        :placeholder="$t('qing_shu_ru_ni_zai_ben_qun_de_ni_cheng')"
       ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveNickName">保存</el-button>
+        <el-button type="primary" @click="saveNickName">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <!-- 群公告 -->
     <el-dialog
       width="400px"
-      title="群公告"
+      :title="$t('qun_gong_gao')"
       :visible.sync="showChangeNotice"
       append-to-body
     >
@@ -43,55 +43,55 @@
         v-model="group.notice"
         type="textarea"
         :rows="5"
-        placeholder="请输入群公告"
+        :placeholder="$t('qing_shu_ru_qun_gong_gao')"
       ></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveNotice">保存</el-button>
+        <el-button type="primary" @click="saveNotice">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <!-- 群管理 -->
     <el-dialog
       width="400px"
-      title="群管理"
+      :title="$t('qun_guan_li')"
       class="group_manage"
       :visible.sync="showChangeManage"
       append-to-body
     >
       <div class="g_list">
         <div class="g_item">
-          <div>全员禁言</div>
+          <div>{{$t('quan_yuan_jin_yan')}}</div>
           <div class="align-center">
             <el-switch v-model="group.is_msg" @change="changeIsMsg">
             </el-switch>
           </div>
         </div>
         <div class="g_item">
-          <div>群内禁止加好友</div>
+          <div>{{$t('qun_nei_jin_zhi_jia_hao_you')}}</div>
           <div class="align-center">
             <el-switch v-model="group.can_add_friend" @change="changeAddFriend">
             </el-switch>
           </div>
         </div>
         <div v-if="info.is_action == 2" class="g_item" @click="handleSetManage">
-          <div>设置管理员</div>
+          <div>{{$t('she_zhi_guan_li_yuan')}}</div>
           <div class="align-center">
             <i class="el-icon-arrow-right"></i>
           </div>
         </div>
         <div v-if="info.is_action == 2" class="g_item" @click="handleTrans">
-          <div>群主转让</div>
+          <div>{{$t('qun_zhu_zhuan_rang')}}</div>
           <div class="align-center">
             <i class="el-icon-arrow-right"></i>
           </div>
         </div>
         <div class="g_item" @click="handleInvite">
-          <div>邀请成员</div>
+          <div>{{$t('yao_qing_cheng_yuan')}}</div>
           <div class="align-center">
             <i class="el-icon-arrow-right"></i>
           </div>
         </div>
         <div class="g_item" @click="handleRemove">
-          <div>踢出成员</div>
+          <div>{{$t('ti_chu_cheng_yuan')}}</div>
           <div class="align-center">
             <i class="el-icon-arrow-right"></i>
           </div>
@@ -100,7 +100,7 @@
     </el-dialog>
     <div class="g_list">
       <div class="g_item">
-        <div class="label">群头像</div>
+        <div class="label">{{$t('qun_tou_xiang')}}</div>
         <div>
           <!-- <el-image
             style="width: 40px; height: 40px"
@@ -124,20 +124,20 @@
         </div>
       </div>
       <div class="g_item" @click="showChangeGroupName = true">
-        <div>群昵称</div>
+        <div>{{$t('qun_ni_cheng')}}</div>
         <div class="align-center">
           <span class="text-hidden">{{ group.name }}</span>
           <i class="el-icon-arrow-right"></i>
         </div>
       </div>
       <div class="g_item" @click="copyText(group.id)">
-        <div>群ID（点击复制）</div>
+        <div>{{$t('qun_id_dian_ji_fu_zhi')}}</div>
         <div class="align-center">
           <span class="text-hidden">{{ group.id }}</span>
         </div>
       </div>
       <div class="g_item" @click="showChangeNickName = true">
-        <div>我在本群的昵称</div>
+        <div>{{$t('wo_zai_ben_qun_de_ni_cheng')}}</div>
         <div class="align-center">
           <span class="text-hidden">{{ info.my_nickname }}</span>
           <i class="el-icon-arrow-right"></i>
@@ -145,33 +145,33 @@
       </div>
       <div class="group_space"></div>
       <div v-if="info.is_action == 0" class="g_item">
-        <div>群公告</div>
+        <div>{{$t('qun_gong_gao')}}</div>
         <div class="align-center">
           <span class="text-hidden">{{ group.notice }}</span>
         </div>
       </div>
       <div v-else class="g_item" @click="showChangeNotice = true">
-        <div>群公告</div>
+        <div>{{$t('qun_gong_gao')}}</div>
         <div class="align-center">
           <span class="text-hidden">{{ group.notice }}</span>
           <i class="el-icon-arrow-right"></i>
         </div>
       </div>
       <div v-if="info.is_action>0" class="g_item" @click="showChangeManage = true">
-        <div>群管理</div>
+        <div>{{$t('qun_guan_li')}}</div>
         <div class="align-center">
           <i class="el-icon-arrow-right"></i>
         </div>
       </div>
       <div class="group_space"></div>
       <div class="g_item">
-        <div>置顶聊天</div>
+        <div>{{$t('zhi_ding_liao_tian')}}</div>
         <div class="align-center">
           <el-switch v-model="info.top" @change="changeTop"> </el-switch>
         </div>
       </div>
       <div class="g_item">
-        <div>消息免打扰</div>
+        <div>{{$t('xiao_xi_mian_da_rao')}}</div>
         <div class="align-center">
           <el-switch v-model="info.is_disturb" @change="changeDisturb">
           </el-switch>
@@ -264,7 +264,7 @@ export default {
     },
     saveNotice () {
       if (!this.hasPerm()) {
-        this.$message.error('没有权限设置');
+        this.$message.error(this.$t('mei_you_quan_xian_she_zhi'));
         return;
       }
       setGroupData({
@@ -309,7 +309,7 @@ export default {
       el.select();
       document.execCommand('copy');
       document.body.removeChild(el);
-      this.$message.success('复制成功');
+      this.$message.success(this.$t('fu_zhi_cheng_gong'));
     },
     changeTop (e) {
       console.log('e', e);
@@ -318,7 +318,7 @@ export default {
         value: e ? 1 : 0
       }).then((res) => {
         this.info.top = e;
-        this.$message.success('切换成功');
+        this.$message.success(this.$t('qie_huan_cheng_gong'));
         this.$emit('changeGroupName');
       });
     },
@@ -332,7 +332,7 @@ export default {
           console.log("res",res);
           this.group.can_add_friend = e;
           this.$forceUpdate();
-          this.$message.success('切换成功');
+          this.$message.success(this.$t('qie_huan_cheng_gong'));
         })
         .catch((err) => {
           console.log('err', err);
@@ -348,7 +348,7 @@ export default {
         .then((res) => {
           this.group.is_msg = e;
           this.$forceUpdate();
-          this.$message.success('切换成功');
+          this.$message.success(this.$t('qie_huan_cheng_gong'));
         })
         .catch((err) => {
           console.log('err', err);
@@ -363,7 +363,7 @@ export default {
       }).then((res) => {
         this.info.is_disturb = e;
         this.$forceUpdate();
-        this.$message.success('切换成功');
+        this.$message.success(this.$t('qie_huan_cheng_gong'));
       });
     },
     open () {
