@@ -5,7 +5,7 @@
         <div class="text-overflow">{{ selectedChat.user.name }}</div>
 
         <span v-if="selectedChat.type == 1">({{ selectedChat.groupImgs.length }})</span>
-        <span v-if="selectedChat.type == 0" class="online">({{ user.online === 0 ? "离线" : "在线" }})
+        <span v-if="selectedChat.type == 0" class="online">({{ user.online === 0 ? $t('li_xian') : $t('zai_xian') }})
           </span>
       </div>
       <!-- <div
@@ -326,28 +326,28 @@
       </ul>
     </div>
     <div v-show="menuVisible" id="contextmenu-msg" class="contextmenu-msg_menu">
-      <div class="contextmenu-msg__item" @click="handleSetting(4)">复制</div>
-      <div class="contextmenu-msg__item" @click="handleSetting(6)">点赞</div>
+      <div class="contextmenu-msg__item" @click="handleSetting(4)">{{$t('fu_zhi')}}</div>
+      <div class="contextmenu-msg__item" @click="handleSetting(6)">{{$t('dian_zan')}}</div>
       <div v-if="currentRow.self || is_action > 0" class="contextmenu-msg__item" @click="handleSetting(1)">
-        删除
+        {{$t('shan_chu')}}
       </div>
-      <div class="contextmenu-msg__item" @click="handleSetting(2)">收藏</div>
-      <div class="contextmenu-msg__item" @click="handleSetting(3)">转发</div>
-      <div class="contextmenu-msg__item" @click="duoxuan(3)">多选转发</div>
+      <div class="contextmenu-msg__item" @click="handleSetting(2)">{{$t('shou_cang')}}</div>
+      <div class="contextmenu-msg__item" @click="handleSetting(3)">{{$t('zhuan_fa')}}</div>
+      <div class="contextmenu-msg__item" @click="duoxuan(3)">{{$t('duo_xuan_zhuan_fa')}}</div>
       <div class="contextmenu-msg__item" @click="kickOut()"
-        v-if="(selectedChat ? selectedChat.type : '') == 1 && !currentRow.self && group_info_all.is_action > 0">踢出该成员
+        v-if="(selectedChat ? selectedChat.type : '') == 1 && !currentRow.self && group_info_all.is_action > 0">{{$t('ti_chu_gai_cheng_yuan')}}
       </div>
       <div class="contextmenu-msg__item" @click="handleNoSend(currentRow.userId)"
-        v-if="(selectedChat ? selectedChat.type : '') == 1 && !currentRow.self && group_info_all.is_action > 0">禁言
+        v-if="(selectedChat ? selectedChat.type : '') == 1 && !currentRow.self && group_info_all.is_action > 0">{{$t('jin_yan')}}
       </div>
 
     </div>
-    <selectUser ref="selectUser" title="消息转发" tip="分别转发给" @handleOk="handleOk"></selectUser>
-    <selectUser ref="selectInvite" title="邀请新成员" tip="" :default="defaultList" @handleOk="handleInvited"></selectUser>
-    <selectUser ref="handleShare" title="分享名片" tip="分别转发给" :multiple="false" @handleOk="handleShared"></selectUser>
-    <selectGroupUser ref="group_member" title="移出群成员" :members="members" @save="handleRemoved"></selectGroupUser>
-    <selectGroupUser ref="group_manage" title="设置管理员" :members="members" @save="handleSetManaged"></selectGroupUser>
-    <selectGroupUser ref="group_trans" title="转让群主" :limit="1" :members="members" @save="handleTransed"></selectGroupUser>
+    <selectUser ref="selectUser" :title="$t('xiao_xi_zhuan_fa')" :tip="$t('fen_bie_zhuan_fa_gei')" @handleOk="handleOk"></selectUser>
+    <selectUser ref="selectInvite" :title="$t('yao_qing_xin_cheng_yuan')" tip="" :default="defaultList" @handleOk="handleInvited"></selectUser>
+    <selectUser ref="handleShare" :title="$t('fen_xiang_ming_pian')" :tip="$t('fen_bie_zhuan_fa_gei')" :multiple="false" @handleOk="handleShared"></selectUser>
+    <selectGroupUser ref="group_member" :title="$t('yi_chu_qun_cheng_yuan')" :members="members" @save="handleRemoved"></selectGroupUser>
+    <selectGroupUser ref="group_manage" :title="$t('she_zhi_guan_li_yuan')" :members="members" @save="handleSetManaged"></selectGroupUser>
+    <selectGroupUser ref="group_trans" :title="$t('zhuan_rang_qun_zhu')" :limit="1" :members="members" @save="handleTransed"></selectGroupUser>
 
 
     <Manage ref="manage" :list_id="selectedChat.list_id" @changeGroupName="changeGroupName" @invite="handleInvite"
@@ -355,16 +355,16 @@
     <el-dialog title="" top="30vh" custom-class="custom-dialog" width="300px" :visible.sync="show_del">
       <div class="dialog-body">
         <div class="dialog-item">
-          确认删除当前好友，
+          {{$t('que_ren_shan_chu_dang_qian_hao_you')}}
         </div>
         <div class="dialog-item">
-          同时删除与该好友的所有聊天记录？
+          {{$t('tong_shi_shan_chu_yu_gai_hao_you_de_suo_you_liao_tian_ji_lu')}}
         </div>
       </div>
       <div slot="footer" class="change-btns dialog-footer">
-        <button class="primarybtn default" @click="show_del = false">取 消</button>
+        <button class="primarybtn default" @click="show_del = false">{{$t('qu_xiao')}}</button>
         <!-- TODO修改用户信息 -->
-        <button class="primarybtn" type="primary" @click="delFriend">删除</button>
+        <button class="primarybtn" type="primary" @click="delFriend">{{$t('shan_chu')}}</button>
       </div>
     </el-dialog>
     <el-dialog :title="current_video.name" custom-class="custom-dialog" width="600px" :visible.sync="show_video">
@@ -375,7 +375,7 @@
       <div class="draw-container">
         <div class="draw_header">
           <el-tabs v-model="active_group_menu" @tab-click="handleGroupClick">
-            <el-tab-pane label="群信息" name="1">
+            <el-tab-pane :label="$t('qun_xin_xi')" name="1">
               <div class="draw-content">
                 <div class="grour_title">
                   <!-- 群头像 -->
@@ -390,17 +390,17 @@
                   <div class="group_name">
                     <span @click="showChangeGroupName = true">{{ group_info.name }}</span>
                   </div>
-                  <i title="分享" class="el-icon-position share-icon"></i>
+                  <i :title="$t('fen_xaing')" class="el-icon-position share-icon"></i>
                 </div>
                 <div class="group_info">
                   <div class="group_item">
-                    <span>群人数</span>
+                    <span>{{$t('qun_ren_shu')}}</span>
                     <span class="black">{{ group_members.length }}人</span>
                   </div>
 
 
                   <el-collapse>
-                    <el-collapse-item title="群公告" name="1">
+                    <el-collapse-item :title="$t('qun_gong_gao')" name="1">
                       <div class="group_item">
                         <div class="notice">
                           <div :class="!is_show ? 'notice_detail ' : 'notice_detail_all'">{{ group_info.notice
@@ -418,7 +418,7 @@
                   </el-collapse>
 
                   <div class="group_item">
-                    <span>我在本群昵称</span>
+                    <span>{{$t('wo_zai_ben_qun_ni_cheng')}}</span>
                     <span class="black">{{ group_info_all.my_nickname }}</span>
                     <i @click="showChangeNickName = true"
                       style="font-size: 20px; color: rgb(66, 141, 252); cursor: pointer;"
@@ -432,7 +432,7 @@
                       </div>
                     </div> -->
                     <div class="g_item w200">
-                      <div>消息免打扰</div>
+                      <div>{{$t('xiao_xi_mian_da_rao')}}</div>
                       <div class="align-center">
                         <el-switch v-model="group_info_all.is_disturb" @change="changeDisturb">
                         </el-switch>
@@ -440,14 +440,14 @@
                     </div>
                   </div>
                 </div>
-                <el-button class="get_out_btn" @click="removeGroup">退出群</el-button>
+                <el-button class="get_out_btn" @click="removeGroup">{{$t('tui_chu_qun')}}</el-button>
               </div>
             </el-tab-pane>
-            <el-tab-pane label="群成员" name="2">
+            <el-tab-pane :label="$t('res_qun_cheng_yuan')" name="2">
               <div class="draw-content">
                 <div class="search-wrapper">
                   <i v-show="noText" class="el-icon-search" style="color:#ccc"></i>
-                  <input v-model="search_member" type="text" class="searchInput" placeholder="搜索" @keyup="change_member">
+                  <input v-model="search_member" type="text" class="searchInput" :placeholder="$t('sou_suo')" @keyup="change_member">
                   <div v-show="haveText" class="searchInput-delete1" @click="del_member">
                     <i style="color:#ccc" class="el-icon-close "></i>
                   </div>
@@ -459,13 +459,13 @@
                     <div class="member-img">
                       <i class="iconfont iconttubiao_addpeople"></i>
                     </div>
-                    <span>添加</span>
+                    <span>{{$t('tian_jia')}}</span>
                   </div>
                   <div class="member-item">
                     <div class="member-img" @click="handleRemove">
                       <i class="iconfont iconttubiao_Less"></i>
                     </div>
-                    <span>删除</span>
+                    <span>{{$t('shan_chu')}}</span>
                   </div>
                   <!-- 群成员信息 -->
                   <div class="member-item" v-for="(item, index) in group_members" :key="index">
@@ -493,13 +493,13 @@
                             <span>{{ item.user_id }}</span>
                           </div>
                           <div v-if="item.show_name" class="remark">
-                            <span>昵称</span>
+                            <span>{{$t('ni_cheng')}}</span>
                             <span>{{ maskText(item.show_name) }}</span>
                           </div>
                         </div>
-                        <div title="对话" v-if="item.is_friend" class="tip iconfont iconIMweb_news"
+                        <div :title="$t('dui_hua')" v-if="item.is_friend" class="tip iconfont iconIMweb_news"
                           @click="send(item, index)"></div>
-                        <div title="添加" v-if="!item.is_friend && item.user_id != user.uid"
+                        <div :title="$t('tian_jia')" v-if="!item.is_friend && item.user_id != user.uid"
                           class="tip iconfont iconIMweb_addfriends" @click="addFriend(item, index)"></div>
                       </div>
                       <div slot="reference" class="member-img">
@@ -516,30 +516,30 @@
               </div>
 
             </el-tab-pane>
-            <el-tab-pane v-if="group_info_all.is_action > 0" label="群管理" name="3">
+            <el-tab-pane v-if="group_info_all.is_action > 0" :label="$t('qun_guan_li')" name="3">
               <div class="g_list">
                 <div class="g_item">
-                  <div>全员禁言</div>
+                  <div>{{$t('quan_yuan_jin_yan')}}</div>
                   <div class="align-center">
                     <el-switch v-model="group_info.is_msg==1?true:false" @change="changeIsMsg">
                     </el-switch>
                   </div>
                 </div>
                 <div class="g_item">
-                  <div>群内禁止加好友</div>
+                  <div>{{$t('qun_nei_jin_zhi_jia_hao_you')}}</div>
                   <div class="align-center">
                     <el-switch v-model="group_info.can_add_friend==1?true:false" @change="changeAddFriend">
                     </el-switch>
                   </div>
                 </div>
                 <div v-if="group_info_all.is_action == 2" class="g_item" @click="handleSetManage">
-                  <div>设置管理员</div>
+                  <div>{{$t('she_zhi_guan_li_yuan')}}</div>
                   <div class="align-center">
                     <i class="el-icon-arrow-right"></i>
                   </div>
                 </div>
                 <div v-if="group_info_all.is_action == 2" class="g_item" @click="handleTrans">
-                  <div>群主转让</div>
+                  <div>{{$t('qun_zhu_zhuan_rang')}}</div>
                   <div class="align-center">
                     <i class="el-icon-arrow-right"></i>
                   </div>
@@ -554,24 +554,24 @@
       </div>
     </el-drawer>
     <!-- 群公告 -->
-    <el-dialog width="400px" title="群公告" :visible.sync="showChangeNotice" append-to-body>
-      <el-input v-model="notice" type="textarea" :rows="5" placeholder="请输入群公告"></el-input>
+    <el-dialog width="400px" :title="$t('qun_gong_gao')" :visible.sync="showChangeNotice" append-to-body>
+      <el-input v-model="notice" type="textarea" :rows="5" :placeholder="$t('qing_shu_ru_qun_gong_gao')"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveNotice">保存</el-button>
+        <el-button type="primary" @click="saveNotice">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <!-- 我在本群的昵称 -->
-    <el-dialog width="400px" title="我在本群的昵称" :visible.sync="showChangeNickName" append-to-body>
-      <el-input v-model="group_info_all.my_nickname" placeholder="请输入你在本群的昵称"></el-input>
+    <el-dialog width="400px" :title="$t('wo_zai_ben_qun_de_ni_cheng')" :visible.sync="showChangeNickName" append-to-body>
+      <el-input v-model="group_info_all.my_nickname" :placeholder="$t('qing_shu_ru_ni_zai_ben_qun_de_ni_cheng')"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveNickName">保存</el-button>
+        <el-button type="primary" @click="saveNickName">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <!-- 群昵称 -->
-    <el-dialog width="400px" title="群昵称" :visible.sync="showChangeGroupName" append-to-body>
-      <el-input v-model="group_info.name" placeholder="请输入群昵称"></el-input>
+    <el-dialog width="400px" :title="$t('qun_ni_cheng')" :visible.sync="showChangeGroupName" append-to-body>
+      <el-input v-model="group_info.name" :placeholder="$t('qing_shu_ru_qun_ni_cheng')"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="saveGroupName">保存</el-button>
+        <el-button type="primary" @click="saveGroupName">{{$t('bao_cun')}}</el-button>
       </span>
     </el-dialog>
     <UserListModal 

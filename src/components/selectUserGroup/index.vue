@@ -37,8 +37,8 @@
           <span class="flex">{{ tip }}</span>
           <span>{{
             selectedList.length == 0
-              ? "未选择"
-              : `已选择${selectedList.length}个`
+             ? $t('wei_xuan_ze')
+              : `${$t('yi_xuan_ze')}${selectedList.length}${$t('ge')}`
           }}</span>
         </div>
         <div class="select-content-wrapper">

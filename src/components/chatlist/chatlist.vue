@@ -57,10 +57,10 @@
     </ul>
     <div v-show="menuVisible" id="contextmenu" class="menu">
       <div class="contextmenu__item" @click="handleSetting(1, !currentRow.top)">
-        {{ currentRow.top ? "取消" : "" }}{{$t('zhi_ding')}}
+        {{ currentRow.top ? $t('qu_xiao') : "" }}{{$t('zhi_ding')}}
       </div>
       <div class="contextmenu__item" @click="handleSetting(2, !currentRow.is_disturb)">
-        {{ currentRow.is_disturb ? "打开新消息提醒" : "消息免打扰" }}
+        {{ currentRow.is_disturb ? $t('da_kai_xin_xi_tong_zhi') : $t('guan_bi_xin_xi_tong_zhi') }}
       </div>
       <div class="contextmenu__item" @click="handleSetting(3)">{{$t('shan_chu_liao_tian')}}</div>
     </div>

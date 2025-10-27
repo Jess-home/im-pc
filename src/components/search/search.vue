@@ -79,7 +79,7 @@
               class="avatar"
               width="40"
               height="40"
-              :src="photoUrl + item.photo"
+              :src="photoUrl + item.avatar"
             >
             <div class="user-item_name">{{ item.nickname }}</div>
             <div
