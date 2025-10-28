@@ -35,10 +35,15 @@
       }"></i>
       <transition name="showbox">
         <div v-show="showEmoji" class="emojiBox">
-          <li v-for="(item, index) in emojis" :key="index">
+          <!-- <li v-for="(item, index) in emojis" :key="index">
             <img v-if="item.title !== '戳一戳'" :src="'static/emoji/' + item.file" :data="item.code"
               @click="addEmoji(item.code)">
-          </li>
+          </li> -->
+          <!-- showEmoji要取反才可以显示 -->
+          <emoji-picker 
+				:hide-emoji="!showEmoji" 
+				@select="onEmojiSelect"
+				/>
         </div>
       </transition>
       <!-- 搜索群成员 -->
@@ -179,6 +184,7 @@ const { Parser } = require('htmlparser2')
 import { mapGetters, mapState, mapActions } from 'vuex'
 import { textMsg, upload, setListTime, getChatDetails, getFriendList, sendCard, getChatList, sendGroupCard } from '@/api'
 import selectGroupUser from '@/components/selectGroupUser';
+import EmojiPicker from '@/components/Emoji/EmojiPicker.vue'
 const { photoUrl, chatUrl } = window.__gconf;
 export default {
   data() {
@@ -214,7 +220,8 @@ export default {
   components: {
     DivInput,
     Editor,
-    selectGroupUser
+    selectGroupUser,
+    EmojiPicker
   },
   computed: {
     ...mapState([
@@ -387,7 +394,9 @@ export default {
       preview.innerHTML += code
       console.log(code)
     },
-
+    onEmojiSelect(code) {
+      preview.innerHTML += code
+    },
 
     // 监听粘贴操作
     handlePaste(event) {
