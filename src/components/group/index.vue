@@ -23,7 +23,7 @@
         class="send"
         @click.stop="send"
       >
-        <span>发消息</span>
+        <span>{{$t('fa_xiao_xi')}}</span>
       </div>
     </div>
   </div>
