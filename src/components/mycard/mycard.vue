@@ -152,6 +152,7 @@
     <el-dialog custom-class="custom-dialog" width="400px" :visible.sync="show_userinfo">
       <div slot="title" class="dialog-title">
         {{$t('xiu_gai_ge_ren_xin_xi')}}
+        
       </div>
       <div class="dialog-body">
         <div class="dialog-item">
@@ -168,13 +169,13 @@
           <el-input class="custom-input" type="textarea" :placeholder="$t('qing_shu_ru_nei_rong')" v-model="user.user_info.doodling"
             maxlength="30" show-word-limit />
         </div>
-        <div class="dialog-item">
+        <!-- <div class="dialog-item">
           <span class="gray align-start">{{$t('xing_bie')}}</span>
           <el-select class="custom-input" v-model="user.user_info.sex" :placeholder="$t('qing_xuan_ze')">
             <el-option v-for="item in sex_options" :key="item.value" :label="item.label" :value="item.value">
             </el-option>
           </el-select>
-        </div>
+        </div> -->
 		<div class="dialog-item">
 		  <span class="gray align-start">{{$t('kai_qi_hao_you_xiao_xi_yan_zheng')}}</span>
 		  <el-switch
@@ -184,11 +185,11 @@
 		    inactive-color="#99aaac">
 		  </el-switch>
 		</div>
-        <div class="dialog-item">
+        <!-- <div class="dialog-item">
           <span class="gray">{{$t('di_qu')}}</span>
           <span style="padding-left:15px;">{{ info.address }}</span>
           <span class="gray" style="padding-left:15px;">(注册IP归属地，暂不支持修改)</span>
-        </div>
+        </div> -->
       </div>
       <div slot="footer" class="change-btns dialog-footer">
         <button class="primarybtn default" @click="show_userinfo = false">{{$t('qu_xiao')}}</button>
