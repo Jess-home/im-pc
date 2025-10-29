@@ -97,6 +97,8 @@ const websocketonmessage = (e) => {
         uid: userInfo.id
       })
     })
+  } else if (ev.action == 'getChatList') {
+    store.dispatch('fetchCharList', store.state.selectId)
   }else if (ev.action == "deleteChat"){
     // 如果监听其他人撤回消息。则执行
     if(store.state.user.uid !== ev.data.data.msg.user_info.uid){

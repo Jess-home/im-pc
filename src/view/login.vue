@@ -68,9 +68,9 @@
           </div>
           <div class="tips">{{ tips_msg }}</div>
           <div class="login-btn" @click="handleLogin">{{$t('deng_lu')}}</div>
-          <div class="youke-login" @click="fetchLogin(false)">
+          <!-- <div class="youke-login" @click="fetchLogin(false)">
             <span>{{$t('you_ke_deng_lu')}}</span>
-          </div>
+          </div> -->
           <a href="" class="xieyi">
             <span>{{$t('shi_yong_ji_dai_biao_tong_yi')}}</span>
             《{{$t('shi_yong_tiao_kuan_he_yin_si_zheng_ce')}}</a

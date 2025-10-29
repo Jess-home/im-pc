@@ -8,6 +8,19 @@
         <span v-if="selectedChat.type == 0" class="online">({{ user.online === 0 ? $t('li_xian') : $t('zai_xian') }})
           </span>
       </div>
+      <div style="display: flex; align-items: center; width: 100%;  padding: 5px;margin-left: 20px;margin-right:50px;">
+        🪧：
+          <marquee 
+            direction="left" 
+            scrollamount="10"
+            scrolldelay="10"
+            onmouseover="this.stop()" 
+            onmouseout="this.start()" 
+            style="font-size: 16px; color: #ff0000; white-space: nowrap; width: 100%;background: #f9f9f9;"
+          >
+            {{ notice }}
+          </marquee>
+        </div>
       <!-- <div
         class="header-option"
         v-if="selectedChat.type == 1"
@@ -57,14 +70,14 @@
             <div class="area">
               <span>{{$t('lai')}}&nbsp&nbsp&nbsp{{$t('yuan')}}</span><span>{{ info.from }}</span>
             </div>
-            <div class="list_id">
+            <!-- <div class="list_id">
               <span>{{$t('wei_xin_hao')}}</span><span>{{ info.username }}</span>
-            </div>
+            </div> -->
           </div>
-          <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(item)"></div>
+          <!-- <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(info)"></div> -->
           <!-- TODO对话 -->
           <div v-if="info" :title="$t('dui_hua')" class="tip iconfont iconIMweb_news" @click="show_userinfo = false"></div>
-          <div v-if="info" :title="$t('shan_chu')" class="tip iconfont iconIMweb_deldte" @click="showDel"></div>
+          <!-- <div v-if="info" :title="$t('shan_chu')" class="tip iconfont iconIMweb_deldte" @click="showDel"></div> -->
 		   <div v-if="info" :title="$t('la_hei')" >{{$t('la_hei')}}
 			   <el-switch
 					@change="showlahei(info.user_id)"
@@ -127,16 +140,16 @@
                       <div class="area">
                         <span>{{$t('lai')}}&nbsp&nbsp&nbsp{{$t('yuan')}}</span><span>{{ info.from }}</span>
                       </div>
-                      <div class="list_id">
+                      <!-- <div class="list_id">
                         <span>{{$t('wei_xin_hao')}}</span><span>{{ info.username }}</span>
-                      </div>
+                      </div> -->
 
                     </div>
                     <div class="" v-if="(selectedChat ? selectedChat.type : '') == 1">
                       <el-button size="mini" @click="handleNoSend(info.user_id)">{{$t('jin_yan')}}</el-button>
                       <el-button size="mini" @click="handleRemove2(info.user_id)">{{$t('yi_chu_qun_liao')}}</el-button>
                     </div>
-                    <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(item)"></div>
+                    <!-- <div v-if="info" :title="$t('fen_xiang_ming_pian')" class="tip el-icon-position" @click="handleShare(info)"></div> -->
                   </div>
                   <img slot="reference" class="avatar" width="36" height="36" :src="item.self
                     ? user.img
@@ -531,13 +544,13 @@
                     </el-switch>
                   </div>
                 </div>
-                <div class="g_item">
+                <!-- <div class="g_item">
                   <div>{{$t('qun_nei_jin_zhi_jia_hao_you')}}</div>
                   <div class="align-center">
                     <el-switch v-model="group_info.can_add_friend==1?true:false" @change="changeAddFriend">
                     </el-switch>
                   </div>
-                </div>
+                </div> -->
                 <div v-if="group_info_all.is_action == 2" class="g_item" @click="handleSetManage">
                   <div>{{$t('she_zhi_guan_li_yuan')}}</div>
                   <div class="align-center">
@@ -2005,7 +2018,7 @@ export default {
     position: relative;
     display:flex;
     align-items:center;
-    justify-content:space-between;
+    justify-content:flex-start;
 
     &-option {
       position: absolute;

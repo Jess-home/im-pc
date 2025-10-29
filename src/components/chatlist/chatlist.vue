@@ -42,8 +42,8 @@
             <p v-if="item.unread > 0" class="unread-right">{{ item.unread }}</p>
             <!-- TODO判断聊天列表是否在线 -->
 
-            <span class="green-tip" v-if="item.type == 0 && item.online"></span>
-            <span class="red-tip" v-if="item.type == 0 && !item.online"></span>
+            <!-- <span class="green-tip" v-if="item.type == 0 && item.online"></span>
+            <span class="red-tip" v-if="item.type == 0 && !item.online"></span> -->
           </div>
           <div class="lastmsg" v-text="guolvehtml(filterContent(item.messages[item.messages.length - 1].content))">
           </div>

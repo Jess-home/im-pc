@@ -152,7 +152,7 @@
     <el-dialog custom-class="custom-dialog" width="400px" :visible.sync="show_userinfo">
       <div slot="title" class="dialog-title">
         {{$t('xiu_gai_ge_ren_xin_xi')}}
-        
+
       </div>
       <div class="dialog-body">
         <div class="dialog-item">
@@ -194,7 +194,7 @@
       <div slot="footer" class="change-btns dialog-footer">
         <button class="primarybtn default" @click="show_userinfo = false">{{$t('qu_xiao')}}</button>
         <!-- TODO修改用户信息接口 -->
-        <button class="primarybtn" type="primary" @click="show_userinfo = false">{{$t('bao_cun')}}</button>
+        <button class="primarybtn" type="primary" @click="baocunxinxi()">{{$t('bao_cun')}}</button>
       </div>
     </el-dialog>
   </div>
@@ -269,6 +269,21 @@ export default {
     },
   },
   methods: {
+    baocunxinxi(){
+      setInfo({
+        type:0,
+        content:this.user.user_info.nickname
+      }).then(res => {
+        setInfo({
+          type:1,
+          content:this.user.user_info.doodling
+        }).then(res => {
+          // console.log(res)
+          this.$message.success(this.$t('she_zhi_cheng_gong'));
+          this.show_userinfo = false;
+        });
+      });
+    },
 	  uservalidation(){
 		 
 		  setInfo({

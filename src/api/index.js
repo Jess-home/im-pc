@@ -417,6 +417,24 @@ export const setGroupData = data => {
     dataType: 'formData'
   })
 }
+// 设置群公告
+export const addGroupNotice = data => {
+  return request({
+    url: '/message/addGroupNotice',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
+// 获取群公告
+export const getGroupNotice = data => {
+  return request({
+    url: '/message/getGroupNotice',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
 // 设置我在本群的昵称
 export const saveGroupNickName = data => {
   return request({
