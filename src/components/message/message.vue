@@ -367,6 +367,7 @@
     <selectGroupUser ref="group_member" :title="$t('yi_chu_qun_cheng_yuan')" :members="members" @save="handleRemoved"></selectGroupUser>
     <selectGroupUser ref="group_manage" :title="$t('she_zhi_guan_li_yuan')" :members="members" @save="handleSetManaged"></selectGroupUser>
     <selectGroupUser ref="group_trans" :title="$t('zhuan_rang_qun_zhu')" :limit="1" :members="members" @save="handleTransed"></selectGroupUser>
+    <selectGroupUser ref="group_bai" :title="$t('bai_ming_dan_she_zhi')" :members="members" @save="setbaimingdan"></selectGroupUser>
 
 
     <Manage ref="manage" :list_id="selectedChat.list_id" @changeGroupName="changeGroupName" @invite="handleInvite"
@@ -563,6 +564,12 @@
                     <i class="el-icon-arrow-right"></i>
                   </div>
                 </div>
+                <div v-if="group_info_all.is_action == 2" class="g_item" @click="baimingdan">
+                  <div>{{$t('bai_ming_dan_she_zhi')}}</div>
+                  <div class="align-center">
+                    <i class="el-icon-arrow-right"></i>
+                  </div>
+                </div>
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -627,7 +634,9 @@ import {
   friendAdd,
   fetchlahei,
   dianzan,
-  groupState
+  groupState,
+  getGroupBai,
+  setGroupBai
 } from '@/api';
 import { mapGetters, mapState, mapActions } from 'vuex';
 import selectUser from '@/components/selectUser';
@@ -1224,7 +1233,38 @@ export default {
         this.is_action = res.data.is_action;
       });
     },
+    // 群好友白名单
+    baimingdan() {
+      getGroupBai({
+        type: 5,
+        list_id: this.selectedChat.list_id
+      })
+        .then((res) => {
+          console.log('res', res);
+          if (res.err == 0) {
+            let arr = res.data.list;
+            this.members = arr;
+            this.$refs.group_bai.open();
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+        .catch((err) => {
+          this.$refs.group_bai.close();
+        });
+    },
     
+    setbaimingdan(users) {
+      setGroupBai({
+        users: JSON.stringify(users),
+        type: 5,
+        list_id: this.selectedChat.list_id
+      }).then((res) => {
+        this.$message.success(this.$t('cao_zuo_cheng_gong'));
+        this.fetchCharList(this.selectId || '');
+      });
+    },
+
     // 转让群主
     handleTrans() {
       getGroupAdmin({

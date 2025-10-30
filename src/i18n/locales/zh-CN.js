@@ -230,5 +230,6 @@ export default {
   "ge": "个",
   "ge_cheng_yuan": "个成员",
   "da_kai_xin_xi_tong_zhi": "打开新消息通知",
-  "guan_bi_xin_xi_tong_zhi": "关闭新消息通知"
+  "guan_bi_xin_xi_tong_zhi": "关闭新消息通知",
+  "bai_ming_dan_she_zhi": "白名单设置"
 }

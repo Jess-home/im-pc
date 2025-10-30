@@ -37,6 +37,27 @@ export default {
       photoUrl: photoUrl
     };
   },
+  watch: {
+    // 当 members 数据更新时自动设置默认勾选
+    members: {
+      handler(newVal) {
+        if (!Array.isArray(newVal)) return
+        const checked = []
+        newVal.forEach(group => {
+          if (!group.data) return
+          group.data.forEach(user => {
+            // 如果 bai_status == 1，则选中
+            if (user && user.bai_status === 1) {
+              checked.push(user.user_id)
+            }
+          })
+        })
+        this.member = checked
+      },
+      deep: true,
+      immediate: true
+    }
+  },
   methods: {
     open () {
       this.dialogVisible = true;

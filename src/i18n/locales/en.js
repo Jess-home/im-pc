@@ -230,5 +230,6 @@ export default {
 "ge": "number",
 "ge_cheng_yuan": "number of members",
 "da_kai_xin_xi_tong_zhi": "Open notifications",
-"guan_bi_xin_xi_tong_zhi": "Close notifications"
+"guan_bi_xin_xi_tong_zhi": "Close notifications",
+"bai_ming_dan_she_zhi": "Whitelist settings"
 }

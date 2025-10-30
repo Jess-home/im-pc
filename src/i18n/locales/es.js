@@ -230,5 +230,6 @@ export default {
 "ge": "número",
 "ge_cheng_yuan": "número de miembros",
 "da_kai_xin_xi_tong_zhi": "Notificaciones abiertas",
-"guan_bi_xin_xi_tong_zhi": "Cerrar notificaciones"
+"guan_bi_xin_xi_tong_zhi": "Cerrar notificaciones",
+"bai_ming_dan_she_zhi": "Configuración de lista blanca"
 }

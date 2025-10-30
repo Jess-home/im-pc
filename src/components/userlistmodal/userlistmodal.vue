@@ -23,6 +23,9 @@
           <span class="gender" :class="item.no_reader_num > 0 ? 'female' : 'male'">
             {{ item.no_reader_num > 0 ? '✖️' : '✅' }}
           </span>
+          <span class="gender" v-if="item.no_reader_num == 0">
+            {{ item.readtime}}
+          </span>
         </div>
       </div>
     </div>

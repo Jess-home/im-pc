@@ -435,6 +435,24 @@ export const getGroupNotice = data => {
     dataType: 'formData'
   })
 }
+//获取白名单列表
+export const getGroupBai = data => {
+  return request({
+    url: '/message/getGroupBai',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
+//设置白名单列表
+export const setGroupBai = data => {
+  return request({
+    url: '/message/setGroupBai',
+    method: 'post',
+    data,
+    dataType: 'formData'
+  })
+}
 // 设置我在本群的昵称
 export const saveGroupNickName = data => {
   return request({
